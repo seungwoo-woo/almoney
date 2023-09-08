@@ -1,9 +1,10 @@
-import './App.css';
+
+import AppShell from './AppShell';
 
 function App() {
   return (
     <div className="App">
-      almoney
+      <AppShell/>
     </div>
   );
 }
