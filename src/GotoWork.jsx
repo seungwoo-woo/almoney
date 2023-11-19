@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
-import { Container } from '@mui/material';
-
+import { Container, Stack } from '@mui/material';
 
 
 // firebase import=======================================================
@@ -11,20 +10,37 @@ import { getAnalytics } from "firebase/analytics";
 import { Timestamp, getFirestore, collection, addDoc, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
 
 
-
 // Initialize Firebase ==================================================
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 
+// Function Start =======================================================================
 
 function GotoWork() {
 
+  var isGotoWorkTime = false;
+  var isGooutWorkTime = false;
   const today = new Date();
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1);
   const date = String(today.getDate());
   const YearAndMonth = year + month;
+  const hours = Number(today.getHours());
+  const minutes = Number(today.getMinutes());
+
+  if (1 <= hours && 9 >= hours) {
+    isGotoWorkTime = true;
+  }
+
+  if (17 <= hours && 24 >= hours) {
+    isGooutWorkTime = true;
+  }
+
+
+  console.log(hours)
+  console.log(minutes)
+
 
 
   // useEffect Start -------------------------------------------------------------------
@@ -54,7 +70,7 @@ function GotoWork() {
   }, []) 
 // useEffect End -------------------------------------------------------------------
 
-
+// 출근 ----------------------------------------------------------------------------
   const writeDailyDataIn = async () => {
 
     var dailyDataCopy = []
@@ -71,6 +87,7 @@ function GotoWork() {
   } // function End --------------------------------------------------
 
 
+// 퇴근 ----------------------------------------------------------------------------
   const writeDailyDataOut = async () => {
 
     var dailyDataCopy = []
@@ -79,7 +96,7 @@ function GotoWork() {
     dailyDataCopy = querySnapshot.data()[date];
 
     for (let i = 0; i < dailyDataCopy.length; i++ ) {
-      if (dailyDataCopy[i]['name'] === '우승우') {
+      if (dailyDataCopy[i]['name'] === '우현건') {
         dailyDataCopy[i]['out'] = Timestamp.fromDate(new Date())
       }
     }
@@ -91,10 +108,21 @@ function GotoWork() {
   } // function End --------------------------------------------------
 
 
+
   return (
-    <Container maxWidth='sm'>      
-      <Button variant="contained" size='large' onClick={writeDailyDataIn} > 출근 </Button>
-      <Button variant="contained" size='large' onClick={writeDailyDataOut} > 퇴근 </Button>
+    <Container maxWidth='xs' sx={{mt: 5}}>      
+      {isGotoWorkTime && 
+      <Stack maxWidth='sm' spacing={2} >
+        <Button variant="contained" size='large' onClick={writeDailyDataIn} sx={{fontWeight: 600}}> 출근 </Button>
+        <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled> 퇴근 </Button>
+      </Stack>
+      }      
+      {isGooutWorkTime &&
+      <Stack maxWidth='sm' spacing={2} >
+        <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
+        <Button variant="contained" size='large' onClick={writeDailyDataOut} sx={{fontWeight: 600}}> 퇴근 </Button>
+      </Stack>
+      }      
     </Container>
   )
 
