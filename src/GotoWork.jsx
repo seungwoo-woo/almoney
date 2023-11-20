@@ -20,6 +20,7 @@ const db = getFirestore(app);
 function GotoWork() {
 
   var isGotoWorkTime = false;
+  var isWorkTime = false;
   var isGooutWorkTime = false;
   const today = new Date();
   const year = String(today.getFullYear());
@@ -37,10 +38,9 @@ function GotoWork() {
     isGooutWorkTime = true;
   }
 
-
-  console.log(hours)
-  console.log(minutes)
-
+  if (9 < hours && 17 > hours) {
+    isWorkTime = true;
+  }
 
 
   // useEffect Start -------------------------------------------------------------------
@@ -122,7 +122,13 @@ function GotoWork() {
         <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} sx={{fontWeight: 600}}> 퇴근 </Button>
       </Stack>
-      }      
+      } 
+      {isWorkTime &&
+      <Stack maxWidth='sm' spacing={2} >
+        <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
+        <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled sx={{fontWeight: 600}}> 퇴근 </Button>
+      </Stack>
+      }
     </Container>
   )
 
