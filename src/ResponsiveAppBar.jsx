@@ -41,7 +41,7 @@ const { userName } = useContext(UserNameContext);
 const { userGrade } = useContext(UserGradeContext);
 
 const settings = ['Logout'];
-var pages = ['']
+let pages = ['']
 
 if (userGrade === 'A') {
   pages = ['출/퇴근하기', '출/퇴근현황', '관리자페이지'];

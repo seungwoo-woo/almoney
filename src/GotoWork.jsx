@@ -34,9 +34,9 @@ function GotoWork() {
 
   const navigate = useNavigate();
 
-  var isGotoWorkTime = false;
-  var isWorkTime = false;
-  var isGooutWorkTime = false;
+  let isGotoWorkTime = false;
+  let isWorkTime = false;
+  let isGooutWorkTime = false;
   const today = new Date();
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1);
@@ -131,7 +131,7 @@ function GotoWork() {
 // 출근 ----------------------------------------------------------------------------
   const writeDailyDataIn = async () => {
 
-    var dailyDataCopy = []
+    let dailyDataCopy = []
     const addData = {name: userName, in: Timestamp.fromDate(new Date()), out: ""};
 
     const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
@@ -148,7 +148,7 @@ function GotoWork() {
 // 퇴근 ----------------------------------------------------------------------------
   const writeDailyDataOut = async () => {
 
-    var dailyDataCopy = []
+    let dailyDataCopy = []
 
     const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
     dailyDataCopy = querySnapshot.data()[date];
