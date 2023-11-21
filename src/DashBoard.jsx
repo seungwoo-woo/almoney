@@ -1,22 +1,32 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
+import { UserNameContext } from './context/UserNameContext';
+import { UserGradeContext } from './context/UserGradeContext';
+import { useNavigate } from 'react-router-dom';
+
 
 
 // firebase import=======================================================
 import { firebaseConfig } from './Firebase.js';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { Timestamp, getFirestore, collection, addDoc, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
+import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
+import Cell from './Cell.jsx';
+import ResponsiveAppBar from './ResponsiveAppBar.jsx';
 
 
 
 // Initialize Firebase ==================================================
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-
+const auth = getAuth(app);
 
 
 
 function DashBoard() {
+
+  const navigate = useNavigate();
 
   const today = new Date();
   const year = String(today.getFullYear());
@@ -26,48 +36,83 @@ function DashBoard() {
 
   const [ goToWorkData, setGoToWorkData ] = useState([]);
 
+  const { setUserName } = useContext(UserNameContext);
+  const { setUserGrade }= useContext(UserGradeContext);
 
 
-    // useEffect Start -------------------------------------------------------------------
 
-    useEffect(()=> {
+// useEffect 1 Start ========================================================
+  useEffect(()=>{
 
-      const getDailyData = async () => {
+  const getUserInformation = () => {    
 
-        let tempArray = []
-  
-        const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      let userName = '';
+      let userGrade = '';
+      const querySnapshot = await getDocs(query(collection(db, "HeeNWoo"), where("id", "==", user.uid)));
+      querySnapshot.forEach((doc) => {
+      userName = (doc.data().name);
+      userGrade = (doc.data().userGrade);
+      setUserName(userName);
+      setUserGrade(userGrade);
+      });
+    } else {
+      navigate('/');
+    }
+  });    
+  }    
+  getUserInformation();
 
-        for(let i = 1 ;  i <=21; i++) {
-          tempArray.push(querySnapshot.data()[i])}
+}, []);
 
-        setGoToWorkData(tempArray);
-  
-      } // function End --------------------------------------------------
-  
-      getDailyData()
-  
-    }, []) 
-  // useEffect End -------------------------------------------------------------------
+
+
+  // useEffect Start -------------------------------------------------------------------
+  useEffect(()=> {
+
+    const getDailyData = async () => {
+
+      let tempArray = []  
+      const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+
+      for(let i = 1 ;  i <=31; i++) {
+        tempArray.push(querySnapshot.data()[i])}
+
+      setGoToWorkData(tempArray);  
+    } // function End --------------------------------------------------
+
+    getDailyData()
+
+  }, []) 
+// useEffect End -------------------------------------------------------------------
 
   console.log(goToWorkData);
 
 
+
+
+
+
   return (
     <>
-    {goToWorkData ? goToWorkData.map(d => (
+    <ResponsiveAppBar />
+    {goToWorkData ? goToWorkData.map((d, index) => (
 
-      (d ? d.map((i) => {
-              return (
-                <>
-                <div>{(new Date(i['in']['seconds']*1000)).toLocaleString()}</div>
-                <div>{i['name']}</div>
-                </>)
-            }): "")
+      (d ? <Cell dailyData = {d} date = {index+1} /> : "")
+
+      // (d ? d.map((i) => {
+      //         return (
+      //           <>
+      //           <div>{(new Date(i['in']['seconds']*1000)).toLocaleString()}</div>
+      //           <div>{i['name']}</div>
+      //           </>)
+      //       }): "")
     )
     )      
   : ""}
     </>
+
   )
 }
 

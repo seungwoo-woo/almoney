@@ -1,23 +1,38 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import Button from '@mui/material/Button';
 import { Container, Stack } from '@mui/material';
+import { pink } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
+import ReportIcon from '@mui/icons-material/Report';
+import Typography from '@mui/material/Typography';
+import Dialog from '@mui/material/Dialog';
+import { DialogContent, DialogTitle, DialogContentText, DialogActions, Table, TableBody, TableCell, TableRow, TextField, Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
+import ResponsiveAppBar from './ResponsiveAppBar.jsx';
+import { UserNameContext } from './context/UserNameContext';
+import { UserGradeContext } from './context/UserGradeContext';
+import { useNavigate } from 'react-router-dom';
+
 
 
 // firebase import=======================================================
 import { firebaseConfig } from './Firebase.js';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { Timestamp, getFirestore, collection, addDoc, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
 
 
 // Initialize Firebase ==================================================
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+const auth = getAuth(app);
 
 
 // Function Start =======================================================================
 
 function GotoWork() {
+
+  const navigate = useNavigate();
 
   var isGotoWorkTime = false;
   var isWorkTime = false;
@@ -29,6 +44,12 @@ function GotoWork() {
   const YearAndMonth = year + month;
   const hours = Number(today.getHours());
   const minutes = Number(today.getMinutes());
+
+  const { userName, setUserName } = useContext(UserNameContext);
+  const { setUserGrade }= useContext(UserGradeContext);
+  const [isCompUpdateDialogOpen, setIsCompUpdateDialogOpen] = useState(false);
+  const [msg, setMsg] = useState('출근')
+
 
   if (1 <= hours && 9 >= hours) {
     isGotoWorkTime = true;
@@ -42,9 +63,46 @@ function GotoWork() {
     isWorkTime = true;
   }
 
+  // --------------------------------------------------------------------
+  const handleClickCompUpdateDialogClose = () => {
+    setIsCompUpdateDialogOpen(false);
+  };
+
+  // --------------------------------------------------------------------
+  const CompletedUpdateDialogOpen = () => {
+    setIsCompUpdateDialogOpen(true);
+  };
+
+
+
+  // useEffect 1 Start ========================================================
+  useEffect(()=>{
+
+    const getUserInformation = () => {    
+  
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        let userName = '';
+        let userGrade = '';
+        const querySnapshot = await getDocs(query(collection(db, "HeeNWoo"), where("id", "==", user.uid)));
+        querySnapshot.forEach((doc) => {
+        userName = (doc.data().name);
+        userGrade = (doc.data().userGrade);
+        setUserName(userName);
+        setUserGrade(userGrade);
+        });
+      } else {
+        navigate('/');
+      }
+    });    
+    }    
+    getUserInformation();
+  
+  }, []);
+
+
 
   // useEffect Start -------------------------------------------------------------------
-
   useEffect(()=> {
 
     const getDailyData = async () => {
@@ -74,7 +132,7 @@ function GotoWork() {
   const writeDailyDataIn = async () => {
 
     var dailyDataCopy = []
-    const addData = {name: '우현건', in: Timestamp.fromDate(new Date()), out: ""};
+    const addData = {name: userName, in: Timestamp.fromDate(new Date()), out: ""};
 
     const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
     dailyDataCopy = querySnapshot.data()[date];      
@@ -96,7 +154,7 @@ function GotoWork() {
     dailyDataCopy = querySnapshot.data()[date];
 
     for (let i = 0; i < dailyDataCopy.length; i++ ) {
-      if (dailyDataCopy[i]['name'] === '우현건') {
+      if (dailyDataCopy[i]['name'] === userName) {
         dailyDataCopy[i]['out'] = Timestamp.fromDate(new Date())
       }
     }
@@ -105,11 +163,16 @@ function GotoWork() {
       [date]: dailyDataCopy  
     })
 
+    setMsg('퇴근')
+    CompletedUpdateDialogOpen();
+
   } // function End --------------------------------------------------
 
 
 
   return (
+    <>
+    <ResponsiveAppBar />
     <Container maxWidth='xs' sx={{mt: 5}}>      
       {isGotoWorkTime && 
       <Stack maxWidth='sm' spacing={2} >
@@ -130,6 +193,30 @@ function GotoWork() {
       </Stack>
       }
     </Container>
+
+    <Dialog
+      open={isCompUpdateDialogOpen}
+      onClose={handleClickCompUpdateDialogClose}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
+        <ReportIcon sx={{mr: 1}}/>{" 출/퇴근하기 확인 "}
+      </DialogTitle>
+      <Divider />
+      <DialogContent>      
+        <Typography>
+          {msg}이 정상적으로 처리되었습니다.
+        </Typography>
+      </DialogContent>
+      <Divider />
+      <DialogActions>
+        <Button onClick={handleClickCompUpdateDialogClose}>OK</Button>
+      </DialogActions>
+    </Dialog>
+
+
+    </>
   )
 
 } // Function End ==========================================================================
