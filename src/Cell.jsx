@@ -76,7 +76,7 @@ function Cell(props) {
 
 
   return (
-    <Card sx={{ minWidth: 275, m: 1, pb: 0 }}>
+    <Card sx={{ minWidth: 275, m: 1, pb: 0, flexFlow: 'wrap' }}>
       <CardContent>        
         <Typography sx={{ fontSize: 16, fontWeight: 600, mb: 1 }} color = {dayColor} gutterBottom>
           {`${date} ${day}`}

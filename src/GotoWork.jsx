@@ -34,9 +34,11 @@ function GotoWork() {
 
   const navigate = useNavigate();
 
-  let isGotoWorkTime = false;
-  let isWorkTime = false;
-  let isGooutWorkTime = false;
+  let isGotoWorkTime = false
+  let isWorkTime = false
+  let isGooutWorkTime = false
+  let goToWorkNo = 0
+
   const today = new Date();
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1);
@@ -48,24 +50,37 @@ function GotoWork() {
   const { userName, setUserName } = useContext(UserNameContext);
   const { setUserGrade }= useContext(UserGradeContext);
   const [isCompUpdateDialogOpen, setIsCompUpdateDialogOpen] = useState(false);
-  const [msg, setMsg] = useState('출근')
+  const [msg, setMsg] = useState('출근');
+  const [dailyData, setDailyData] = useState(['']);
+  const [wasGotoWork, setWasGotoWork] = useState(false);
 
 
-  if (1 <= hours && 9 >= hours) {
-    isGotoWorkTime = true;
+  if (1 <= hours && 11 >= hours) {
+    isGotoWorkTime = true
   }
 
   if (17 <= hours && 24 >= hours) {
-    isGooutWorkTime = true;
+    isGooutWorkTime = true
   }
 
-  if (9 < hours && 17 > hours) {
-    isWorkTime = true;
+  if (11 < hours && 17 > hours) {
+    isWorkTime = true
   }
+
+  // if(wasGotoWork) {
+  //   isWorkTime = true
+  // }
+
+
+  
+  
+
+  
 
   // --------------------------------------------------------------------
   const handleClickCompUpdateDialogClose = () => {
     setIsCompUpdateDialogOpen(false);
+    navigate('/dashBoard');
   };
 
   // --------------------------------------------------------------------
@@ -111,22 +126,30 @@ function GotoWork() {
 
       if (!querySnapshot.exists()) {
         await setDoc(doc(db, "HeeNWoo", YearAndMonth),{
-          [date]: []
+          [date]: []                                        // 매월 1일 자료 생성
         });
       } else {
         const keys = Object.keys(querySnapshot.data())
         if (!keys.includes(date)) {
           await setDoc(doc(db, "HeeNWoo", YearAndMonth),{
-            ...querySnapshot.data(), [date]: []
+            ...querySnapshot.data(), [date]: []             // 매일 신규 자료 생성
           });
         }
       }
+
+
+      setDailyData(querySnapshot.data());
+
+
+
     } // function End --------------------------------------------------
 
     getDailyData()
 
   }, []) 
 // useEffect End -------------------------------------------------------------------
+
+
 
 // 출근 ----------------------------------------------------------------------------
   const writeDailyDataIn = async () => {
@@ -135,12 +158,16 @@ function GotoWork() {
     const addData = {name: userName, in: Timestamp.fromDate(new Date()), out: ""};
 
     const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
-    dailyDataCopy = querySnapshot.data()[date];      
+    dailyDataCopy = querySnapshot.data()[date];    
+    
     dailyDataCopy.push(addData);
 
     await updateDoc(doc(db, "HeeNWoo", YearAndMonth), {
-      [date]: dailyDataCopy  
+      [date]: dailyDataCopy
     })
+    
+    setMsg('출근')
+    CompletedUpdateDialogOpen();    
 
   } // function End --------------------------------------------------
 
@@ -168,13 +195,24 @@ function GotoWork() {
 
   } // function End --------------------------------------------------
 
+  
+
+  if (dailyData[date]) {
+    for (let i = 0 ; i < dailyData[date].length ; i++) {
+      if (dailyData[date][i]['name'] === userName) {
+        navigate('/dashBoard');
+      }
+    }    
+  }
+
+
 
 
   return (
     <>
     <ResponsiveAppBar />
     <Container maxWidth='xs' sx={{mt: 5}}>      
-      {isGotoWorkTime && 
+      {isGotoWorkTime &&  
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled> 퇴근 </Button>
@@ -190,6 +228,7 @@ function GotoWork() {
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled sx={{fontWeight: 600}}> 퇴근 </Button>
+        <Button variant="contained" size='large' disabled sx={{fontWeight: 600}}> 지근은 근무시간 입니다. </Button>
       </Stack>
       }
     </Container>
