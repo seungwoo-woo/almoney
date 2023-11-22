@@ -1,12 +1,18 @@
 
 import * as React from 'react';
+import { useContext, useState } from 'react'
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack } from '@mui/material';
-import { deepOrange, deepPurple } from '@mui/material/colors';
+import { deepOrange, deepPurple, purple } from '@mui/material/colors';
+
+
+import { UserNameContext } from './context/UserNameContext';
+import { UserGradeContext } from './context/UserGradeContext';
 
 
 // (d ? d.map((i) => {
@@ -27,12 +33,16 @@ function Cell(props) {
 
   const { dailyData, date } = props;
 
+  const { userName } = useContext(UserNameContext);
+  const { userGrade } = useContext(UserGradeContext);
+
   const today = new Date();
   const year = String(today.getFullYear());
-  const month = String(today.getMonth() + 1);
+  const month = String(today.getMonth());
 
-  var dayColor = ''
-  var day = ''
+  let dayColor = ''
+  let peopleColor = ''
+  let day = ''
 
   if((new Date(year, month, date)).getDay()===0) {
     dayColor = 'red';
@@ -73,9 +83,17 @@ function Cell(props) {
         </Typography>
         <Stack  direction="row" spacing={1}>
         {dailyData.map(d => {
-          return (          
-          <Avatar sx={{ bgcolor: deepPurple[600], fontSize: 12 }}>{d['name']}</Avatar>
-          )
+
+          if(d['name'] === userName) {
+            return (          
+              <Avatar sx={{ bgcolor: deepOrange[500], fontSize: 12 }}>{d['name']}</Avatar>
+              )
+          } else {
+            return (          
+              <Avatar sx={{ bgcolor: 'GrayText', fontSize: 12 }}>{d['name']}</Avatar>
+              )
+          }
+          
         })} 
         </Stack>
       </CardContent>
