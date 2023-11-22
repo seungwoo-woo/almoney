@@ -56,6 +56,7 @@ function AdminPage() {
   return (
     <>
       <ResponsiveAppBar />
+      <div>관리자 페이지</div>
     </>
   )
 }

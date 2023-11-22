@@ -66,6 +66,12 @@ const handleCloseNavMenu = (e) => {
   if(e.target.innerText==='출/퇴근현황'){
     navigate('/dashBoard')
   }
+
+  if(e.target.innerText==='관리자페이지'){
+    navigate('/admin')
+  }
+
+
   setAnchorElNav(null);
   
 };
