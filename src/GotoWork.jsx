@@ -11,6 +11,8 @@ import ResponsiveAppBar from './ResponsiveAppBar.jsx';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import { useNavigate } from 'react-router-dom';
+import Modal from '@mui/material/Modal';
+
 
 
 
@@ -54,6 +56,12 @@ function GotoWork() {
   const [dailyData, setDailyData] = useState(['']);
   const [wasGotoWork, setWasGotoWork] = useState(false);
 
+  const [open, setOpen] = React.useState(true);
+
+  const handleClose = () => {
+    setOpen(false);
+    navigate('/dashBoard')
+  }
 
   if (1 <= hours && 11 >= hours) {
     isGotoWorkTime = true
@@ -195,17 +203,52 @@ function GotoWork() {
 
   } // function End --------------------------------------------------
 
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
   
 
-  if (dailyData[date]) {
+  if (dailyData[date] && isGotoWorkTime) {
     for (let i = 0 ; i < dailyData[date].length ; i++) {
       if (dailyData[date][i]['name'] === userName) {
-        navigate('/dashBoard');
+
+        return (
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
+              <ReportIcon sx={{mr: 1}}/>{" 출/퇴근하기 확인 "}
+            </DialogTitle>
+            <Divider />
+            <DialogContent>      
+              <Typography>
+                이미 출근하기를 한 사용자입니다.
+              </Typography>
+            </DialogContent>
+            <Divider />
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
+
+        )
+
       }
     }    
   }
-
-
 
 
   return (
