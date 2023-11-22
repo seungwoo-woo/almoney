@@ -2,7 +2,8 @@ import React, { useEffect, useState, useContext } from 'react'
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import { useNavigate } from 'react-router-dom';
-
+import Cell from './Cell.jsx';
+import ResponsiveAppBar from './ResponsiveAppBar.jsx';
 
 
 // firebase import=======================================================
@@ -10,10 +11,8 @@ import { firebaseConfig } from './Firebase.js';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
-import Cell from './Cell.jsx';
-import ResponsiveAppBar from './ResponsiveAppBar.jsx';
+
 
 
 
@@ -86,12 +85,6 @@ function DashBoard() {
 
   }, []) 
 // useEffect End -------------------------------------------------------------------
-
-  console.log(goToWorkData);
-
-
-
-
 
 
   return (

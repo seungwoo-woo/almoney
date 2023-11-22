@@ -7,7 +7,7 @@ import DashBoard from './DashBoard';
 import { useState } from 'react';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
-
+import AdminPage from './AdminPage';
 
 
 function App() {
@@ -26,8 +26,8 @@ function App() {
           <Route path = "/signUp" element={<SignUp />} />
           <Route path = "/dashBoard" element={<DashBoard />} />
           {/*<Route path = "/openPhoneList" element={<OpenPhoneList />} />
-          <Route path = "/calculate" element={<OpenPhoneCaculation />} />
-          <Route path = "/admin" element={<AdminPage />} /> */}
+          <Route path = "/calculate" element={<OpenPhoneCaculation />} />*/}
+          <Route path = "/admin" element={<AdminPage />} /> 
         </Routes>
       </Router>
     </UserGradeContext.Provider>
