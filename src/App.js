@@ -25,8 +25,6 @@ function App() {
           <Route path = "/gotoWork" element={<GotoWork />} />
           <Route path = "/signUp" element={<SignUp />} />
           <Route path = "/dashBoard" element={<DashBoard />} />
-          {/*<Route path = "/openPhoneList" element={<OpenPhoneList />} />
-          <Route path = "/calculate" element={<OpenPhoneCaculation />} />*/}
           <Route path = "/admin" element={<AdminPage />} /> 
         </Routes>
       </Router>

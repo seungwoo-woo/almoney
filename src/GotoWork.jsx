@@ -222,7 +222,6 @@ function GotoWork() {
       if (dailyData[date][i]['name'] === userName) {
 
         return (
-
           <Dialog
             open={open}
             onClose={handleClose}
@@ -235,7 +234,7 @@ function GotoWork() {
             <Divider />
             <DialogContent>      
               <Typography>
-                이미 출근하기를 한 사용자입니다.
+                이미 출근하기 버튼을 누른 사용자입니다.
               </Typography>
             </DialogContent>
             <Divider />
@@ -243,9 +242,38 @@ function GotoWork() {
               <Button onClick={handleClose}>OK</Button>
             </DialogActions>
           </Dialog>
-
         )
+      }
+    }    
+  }
 
+
+  if (dailyData[date] && isGooutWorkTime) {
+    for (let i = 0 ; i < dailyData[date].length ; i++) {
+      if (dailyData[date][i]['name'] === userName && dailyData[date][i]['out'] !== "") {
+
+        return (
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
+              <ReportIcon sx={{mr: 1}}/>{" 출/퇴근하기 확인 "}
+            </DialogTitle>
+            <Divider />
+            <DialogContent>      
+              <Typography>
+                이미 퇴근하기 버튼을 누른 사용자입니다.
+              </Typography>
+            </DialogContent>
+            <Divider />
+            <DialogActions>
+              <Button onClick={handleClose}>OK</Button>
+            </DialogActions>
+          </Dialog>
+        )
       }
     }    
   }
