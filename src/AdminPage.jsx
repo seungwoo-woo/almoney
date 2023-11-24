@@ -159,9 +159,9 @@ function AdminPage() {
           <TableRow>
             <StyledTableCell style={{fontWeight: 400}} align='center' >No.</StyledTableCell>
             <StyledTableCell style={{fontWeight: 400}} align='center' >사용자</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 400}} align='center' >권한등급</StyledTableCell>
+            <StyledTableCell style={{fontWeight: 400}} align='center' >권한</StyledTableCell>
             <StyledTableCell style={{fontWeight: 400}} align='center' >비고</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACTION</StyledTableCell>
+            <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
           </TableRow>
         </TableHead>
 
