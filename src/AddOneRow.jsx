@@ -13,7 +13,6 @@ function AddOneRow(props) {
 
 // Initialize Variable ==================================================
 const {id, no, cell1, cell2, cell3, getDataRefresh, editCase} = props;
-// const {id, no, cell1, cell2, cell3} = props;
 
 // Table style ----------------------------------------------------
 const StyledTableRow = styled(TableRow)(({ theme }) => ({

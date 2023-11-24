@@ -65,17 +65,19 @@ function GotoWork() {
     navigate('/dashBoard')
   }
 
-  if (1 <= hours && 12 >= hours) {
+  if (1 <= hours && 9 >= hours) {
     isGotoWorkTime = true
   }
 
-  if (17 <= hours && 24 >= hours) {
+  if (9 < hours && 15 > hours) {
+    isWorkTime = true
+  }
+
+  if (15 <= hours && 24 >= hours) {
     isGooutWorkTime = true
   }
 
-  if (12 < hours && 17 > hours) {
-    isWorkTime = true
-  }
+  
 
 
   // --------------------------------------------------------------------
@@ -239,6 +241,42 @@ function GotoWork() {
         )
       }
     }    
+  }
+
+
+  if (dailyData[date] && isGooutWorkTime) {
+    let wasGotoWork = 0
+
+    for (let i = 0 ; i < dailyData[date].length ; i++) {
+      if (dailyData[date][i]['name'] === userName) {
+        wasGotoWork = 1
+      }        
+      }
+    
+    if (wasGotoWork === 0) {
+      return (
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
+            <ReportIcon sx={{mr: 1}}/>{" 출/퇴근하기 확인 "}
+          </DialogTitle>
+          <Divider />
+          <DialogContent>      
+            <Typography>
+              오늘 출근기록이 없는 사용자입니다.
+            </Typography>
+          </DialogContent>
+          <Divider />
+          <DialogActions>
+            <Button onClick={handleClose}>OK</Button>
+          </DialogActions>
+        </Dialog>
+      )
+    }
   }
 
 

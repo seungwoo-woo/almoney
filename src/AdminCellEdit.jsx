@@ -11,8 +11,6 @@ import Typography from '@mui/material/Typography';
 
 
 
-
-
 // firebase import=======================================================
 import { firebaseConfig } from './Firebase.js';
 import { initializeApp } from "firebase/app";
@@ -29,8 +27,6 @@ const db = getFirestore(app);
 const auth = getAuth(app);
 
 
-
-
 function AdminCellEdit(props) {
 
   const { id, getDataRefresh, editCase } = props
@@ -38,10 +34,6 @@ function AdminCellEdit(props) {
   const [adminEditCase, setAdminEditCase] = useState([{}]);
   const [isCompUpdateDialogOpen, setIsCompUpdateDialogOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
-  const [isDisableOpen, setIsDisableOpen] = useState(false);
-
-
-
 
 
   // Edit 대상 User 정보 읽어오기 ------------------------------------------------
@@ -50,22 +42,18 @@ function AdminCellEdit(props) {
     setAdminEditCase(querySnapshot.data());
   }
 
-
   // --------------------------------------------------------------------
   const CompletedUpdateDialogOpen = () => {
     setIsCompUpdateDialogOpen(true);
   };
 
-
   // --------------------------------------------------------------------
-const hdcEditClose = () => {
-  if (editCase === 1) {
-    getAdminEditCase1();
-  } 
-
-  setIsEditOpen(false);
-
-};
+  const hdcEditClose = () => {
+    if (editCase === 1) {
+      getAdminEditCase1();
+    } 
+    setIsEditOpen(false);
+  };
 
 
   // --------------------------------------------------------------------
@@ -85,7 +73,6 @@ const hdcEditClose = () => {
     } catch (e) {
       console.error("Error adding document: ", e);
     }
-
     hdcEditClose();
   }
 
@@ -101,7 +88,6 @@ const hdcEditClose = () => {
     setIsCompUpdateDialogOpen(false);
     getDataRefresh();
   };
-
 
 
   // --------------------------------------------------------------------
@@ -130,16 +116,16 @@ const hdcEditClose = () => {
     <Dialog open={isEditOpen} onClose={hdcEditClose}>
       {(editCase === 1) && <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
       <ReportIcon sx={{mr: 1}}/>사용자 정보 수정 (A-관리자, B-직원)</DialogTitle>}
-    <Divider />       
-    <DialogContent>
-      {(editCase === 1) && <TextField value={adminEditCase.name} id="name" label="사용자" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
-      {(editCase === 1) && <TextField value={adminEditCase.userGrade} id="userGrade" label="권한등급" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
-      {(editCase === 1) && <TextField value={adminEditCase.note} id="note" label="비고" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={hdcEditClose}>Cancel</Button>
-      <Button onClick={handleUpdate}>Update</Button>          
-    </DialogActions>
+      <Divider />       
+      <DialogContent>
+        {(editCase === 1) && <TextField value={adminEditCase.name} id="name" label="사용자" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+        {(editCase === 1) && <TextField value={adminEditCase.userGrade} id="userGrade" label="권한등급" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+        {(editCase === 1) && <TextField value={adminEditCase.note} id="note" label="비고" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={hdcEditClose}>Cancel</Button>
+        <Button onClick={handleUpdate}>Update</Button>          
+      </DialogActions>
     </Dialog>
 
 
@@ -163,11 +149,7 @@ const hdcEditClose = () => {
         <Button onClick={handleClickCompUpdateDialogClose}>OK</Button>
       </DialogActions>
     </Dialog>
-
-
   </>
-
-
   )
 }
 

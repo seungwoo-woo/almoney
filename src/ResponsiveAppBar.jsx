@@ -53,11 +53,6 @@ if (userGrade === 'A') {
 }
 
 
-console.log(userName)
-console.log(userGrade)
-console.log(userCompany)
-
-
 // Define subFunction ==================================================
 //-----------------------------------------------------------------------
 const handleOpenNavMenu = (event) => {
@@ -77,7 +72,6 @@ const handleCloseNavMenu = (e) => {
   if(e.target.innerText==='관리자페이지'){
     navigate('/admin')
   }
-
 
   setAnchorElNav(null);
   

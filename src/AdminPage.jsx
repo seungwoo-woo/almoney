@@ -145,6 +145,7 @@ function AdminPage() {
   return (
     <>
       <ResponsiveAppBar />
+      
       <Card sx={{ minWidth: 275, m: 1, pt: 0.5, flexFlow: 'wrap' }} >
       <Breadcrumbs aria-label="breadcrumb">
         <Button onClick={handleClickEmployee}>직원관리</Button>
@@ -152,45 +153,35 @@ function AdminPage() {
       </Breadcrumbs>
       </Card>
 
-      {openEmployee && <Card sx={{ minWidth: 275, m: 1, flexFlow: 'wrap' }}>
-        
-      <Table stickyHeader size='small' aria-label="sticky table">        
-        <TableHead>
-          <TableRow>
-            <StyledTableCell style={{fontWeight: 400}} align='center' >No.</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 400}} align='center' >사용자</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 400}} align='center' >권한</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 400}} align='center' >비고</StyledTableCell>
-            <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
-          </TableRow>
-        </TableHead>
-
-        <TableBody>
-          {userList.map((item, index) => {
-                return (<AddOneRow 
-                  key = {item.id}
-                  id = {item.id} 
-                  no = {index + 1}
-                  cell1 = {item.name}
-                  cell2 = {item.userGrade}
-                  cell3 = {item.note}
-                  getDataRefresh={getUserList}
-                  editCase={editCase}
-                  />
-                );    // return ----------
-            })
-          }
-        </TableBody>
-
-
-
-
-
-      </Table>
-
-
-      </Card>}
-      
+      {openEmployee && <Card sx={{ minWidth: 275, m: 1, flexFlow: 'wrap' }}>        
+        <Table stickyHeader size='small' aria-label="sticky table">        
+          <TableHead>
+            <TableRow>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >No.</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >사용자</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >권한</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >비고</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT.</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {userList.map((item, index) => {
+                  return (<AddOneRow 
+                    key = {item.id}
+                    id = {item.id} 
+                    no = {index + 1}
+                    cell1 = {item.name}
+                    cell2 = {item.userGrade}
+                    cell3 = {item.note}
+                    getDataRefresh={getUserList}
+                    editCase={editCase}
+                    />
+                  );    // return ----------
+              })
+            }
+          </TableBody>
+        </Table>
+      </Card>}      
     </>
   )
 }
