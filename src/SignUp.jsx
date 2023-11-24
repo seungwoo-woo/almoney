@@ -86,11 +86,12 @@ const handleSubmit = async (event) => {
 
     const user = userCredential.user; 
     
-    const docRef = addDoc(collection(db, "HeeNWoo"), {
+    const docRef = addDoc(collection(db, "Users"), {
       id: user.uid,
       name: data.get('firstName'),
       company: data.get('company'),
       email: data.get('email'),
+      note: '',
       isDeleted: 0,
       userGrade: 'D'
     });

@@ -8,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import Dialog from '@mui/material/Dialog';
 import { DialogContent, DialogTitle, DialogContentText, DialogActions, Table, TableBody, TableCell, TableRow, TextField, Select, MenuItem, Box, FormControl, InputLabel } from "@mui/material";
 import ResponsiveAppBar from './ResponsiveAppBar.jsx';
+import { UserCompanyContext } from './context/UserCompanyContext';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import { useNavigate } from 'react-router-dom';
@@ -49,12 +50,13 @@ function GotoWork() {
   const hours = Number(today.getHours());
   const minutes = Number(today.getMinutes());
 
+  const { userCompany, setUserCompany } = useContext(UserCompanyContext);
   const { userName, setUserName } = useContext(UserNameContext);
-  const { setUserGrade }= useContext(UserGradeContext);
+  const { userGrade, setUserGrade } = useContext(UserGradeContext);
+
   const [isCompUpdateDialogOpen, setIsCompUpdateDialogOpen] = useState(false);
   const [msg, setMsg] = useState('출근');
   const [dailyData, setDailyData] = useState(['']);
-  const [wasGotoWork, setWasGotoWork] = useState(false);
 
   const [open, setOpen] = React.useState(true);
 
@@ -63,7 +65,7 @@ function GotoWork() {
     navigate('/dashBoard')
   }
 
-  if (1 <= hours && 11 >= hours) {
+  if (1 <= hours && 12 >= hours) {
     isGotoWorkTime = true
   }
 
@@ -71,19 +73,10 @@ function GotoWork() {
     isGooutWorkTime = true
   }
 
-  if (11 < hours && 17 > hours) {
+  if (12 < hours && 17 > hours) {
     isWorkTime = true
   }
 
-  // if(wasGotoWork) {
-  //   isWorkTime = true
-  // }
-
-
-  
-  
-
-  
 
   // --------------------------------------------------------------------
   const handleClickCompUpdateDialogClose = () => {
@@ -97,7 +90,6 @@ function GotoWork() {
   };
 
 
-
   // useEffect 1 Start ========================================================
   useEffect(()=>{
 
@@ -105,12 +97,15 @@ function GotoWork() {
   
     onAuthStateChanged(auth, async (user) => {
       if (user) {
+        let userCompany = '';
         let userName = '';
         let userGrade = '';
-        const querySnapshot = await getDocs(query(collection(db, "HeeNWoo"), where("id", "==", user.uid)));
+        const querySnapshot = await getDocs(query(collection(db, "Users"), where("id", "==", user.uid)));
         querySnapshot.forEach((doc) => {
+        userCompany = (doc.data().company);
         userName = (doc.data().name);
         userGrade = (doc.data().userGrade);
+        setUserCompany(userCompany);
         setUserName(userName);
         setUserGrade(userGrade);
         });
@@ -130,31 +125,30 @@ function GotoWork() {
 
     const getDailyData = async () => {
 
-      const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+      // const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+      const querySnapshot = await getDoc(doc(db, userCompany, YearAndMonth));
 
       if (!querySnapshot.exists()) {
-        await setDoc(doc(db, "HeeNWoo", YearAndMonth),{
+        await setDoc(doc(db, userCompany, YearAndMonth),{
           [date]: []                                        // 매월 1일 자료 생성
         });
       } else {
         const keys = Object.keys(querySnapshot.data())
         if (!keys.includes(date)) {
-          await setDoc(doc(db, "HeeNWoo", YearAndMonth),{
+          await setDoc(doc(db, userCompany, YearAndMonth),{
             ...querySnapshot.data(), [date]: []             // 매일 신규 자료 생성
           });
         }
       }
 
-
       setDailyData(querySnapshot.data());
-
-
 
     } // function End --------------------------------------------------
 
-    getDailyData()
+    if(userCompany) {
+      getDailyData() }
 
-  }, []) 
+  }, [userCompany]) 
 // useEffect End -------------------------------------------------------------------
 
 
@@ -165,12 +159,12 @@ function GotoWork() {
     let dailyDataCopy = []
     const addData = {name: userName, in: Timestamp.fromDate(new Date()), out: ""};
 
-    const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+    const querySnapshot = await getDoc(doc(db, userCompany, YearAndMonth));
     dailyDataCopy = querySnapshot.data()[date];    
     
     dailyDataCopy.push(addData);
 
-    await updateDoc(doc(db, "HeeNWoo", YearAndMonth), {
+    await updateDoc(doc(db, userCompany, YearAndMonth), {
       [date]: dailyDataCopy
     })
     
@@ -185,7 +179,7 @@ function GotoWork() {
 
     let dailyDataCopy = []
 
-    const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
+    const querySnapshot = await getDoc(doc(db, userCompany, YearAndMonth));
     dailyDataCopy = querySnapshot.data()[date];
 
     for (let i = 0; i < dailyDataCopy.length; i++ ) {
@@ -194,7 +188,7 @@ function GotoWork() {
       }
     }
 
-    await updateDoc(doc(db, "HeeNWoo", YearAndMonth), {
+    await updateDoc(doc(db, userCompany, YearAndMonth), {
       [date]: dailyDataCopy  
     })
 
@@ -299,7 +293,7 @@ function GotoWork() {
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled sx={{fontWeight: 600}}> 퇴근 </Button>
-        <Button variant="contained" size='large' disabled sx={{fontWeight: 600}}> 지근은 근무시간 입니다. </Button>
+        <Button variant="contained" size='large' disabled sx={{fontWeight: 600}}> 지금은 근무시간 입니다. </Button>
       </Stack>
       }
     </Container>

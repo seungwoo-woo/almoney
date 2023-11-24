@@ -16,6 +16,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { initializeApp } from "firebase/app";
 import { firebaseConfig } from './Firebase.js';
 import { getAuth, signOut } from "firebase/auth";
+import { UserCompanyContext } from './context/UserCompanyContext';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 
@@ -39,6 +40,8 @@ const [ anchorElUser, setAnchorElUser ] = React.useState(null);
 
 const { userName } = useContext(UserNameContext);
 const { userGrade } = useContext(UserGradeContext);
+const { userCompany } = useContext(UserCompanyContext);
+
 
 const settings = ['Logout'];
 let pages = ['']
@@ -49,6 +52,10 @@ if (userGrade === 'A') {
   pages = ['출/퇴근하기', '출/퇴근현황'];
 }
 
+
+console.log(userName)
+console.log(userGrade)
+console.log(userCompany)
 
 
 // Define subFunction ==================================================

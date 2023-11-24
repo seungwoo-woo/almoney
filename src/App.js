@@ -5,6 +5,7 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 import DashBoard from './DashBoard';
 import { useState } from 'react';
+import { UserCompanyContext } from './context/UserCompanyContext';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import AdminPage from './AdminPage';
@@ -12,11 +13,13 @@ import AdminPage from './AdminPage';
 
 function App() {
 
+  const [ userCompany, setUserCompany ] = useState(null);
   const [ userName, setUserName ] = useState(null);
   const [ userGrade, setUserGrade ] = useState(null);
 
   return (
 
+    <UserCompanyContext.Provider value={{userCompany, setUserCompany}}>
     <UserNameContext.Provider value={{userName, setUserName}}>
     <UserGradeContext.Provider value={{userGrade, setUserGrade}}>   
       <Router>
@@ -30,7 +33,7 @@ function App() {
       </Router>
     </UserGradeContext.Provider>
     </UserNameContext.Provider>
-    
+    </UserCompanyContext.Provider>
 
 
     // <div className="App">

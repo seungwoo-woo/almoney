@@ -99,7 +99,7 @@ useEffect(()=>{
   // 사용자 리스트 읽어오기 --------------------------------------------------
   const getUser = async () => {
     let data = [];
-    const querySnapshot = await getDocs(query(collection(db, "HeeNWoo"), orderBy("name", "asc"), where("userGrade", "==", 'D')));
+    const querySnapshot = await getDocs(query(collection(db, "Users"), orderBy("name", "asc"), where("userGrade", "==", 'D')));
     querySnapshot.forEach((doc) => {
       data.push(doc.data().email);
     });
