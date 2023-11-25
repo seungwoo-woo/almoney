@@ -111,7 +111,7 @@ function AdminCellEdit(props) {
   return (
     <>
     <div style={{display: 'flex', justifyContent: 'center'}}>
-      <EditCalendarTwoToneIcon cursor='pointer' variant='contained' color='primary' sx={{ fontSize: 18 }} onClick={hdcEditOpen}/>
+      <EditCalendarTwoToneIcon cursor='pointer' variant='contained' color='primary' sx={{ fontSize: 20 }} onClick={hdcEditOpen}/>
     </div>
 
     <Dialog open={isEditOpen} onClose={hdcEditClose}>

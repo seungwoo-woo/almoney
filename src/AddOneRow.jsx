@@ -28,12 +28,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 
 return (
   <StyledTableRow>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}>{no}</TableCell>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}>{cell1}</TableCell>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}>{cell2}</TableCell>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}>{cell3}</TableCell>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}>{cell4}</TableCell>
-    <TableCell align='center' style={{fontSize: 12, fontWeight: 400}}><AdminCellEdit id={id} getDataRefresh={getDataRefresh} editCase={editCase}/></TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}>{no}</TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}>{cell1}</TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}>{cell2}</TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}>{cell3}</TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}>{cell4}</TableCell>
+    <TableCell align='center' style={{fontSize: 14, fontWeight: 400}}><AdminCellEdit id={id} getDataRefresh={getDataRefresh} editCase={editCase}/></TableCell>
   </StyledTableRow>
 );
 
