@@ -64,7 +64,8 @@ function AdminCellEdit(props) {
       if (editCase === 1) {
         const docRef = await updateDoc(doc(db, "Users", id), {
           userGrade: adminEditCase.userGrade,
-          note: adminEditCase.note,
+          in: adminEditCase.in,
+          out: adminEditCase.out,
         });}
 
       CompletedUpdateDialogOpen();
@@ -118,9 +119,10 @@ function AdminCellEdit(props) {
       <ReportIcon sx={{mr: 1}}/>사용자 정보 수정 (A-관리자, B-직원)</DialogTitle>}
       <Divider />       
       <DialogContent>
-        {(editCase === 1) && <TextField value={adminEditCase.name} id="name" label="사용자" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+        {(editCase === 1) && <TextField value={adminEditCase.name} id="name" label="이름" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
         {(editCase === 1) && <TextField value={adminEditCase.userGrade} id="userGrade" label="권한등급" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
-        {(editCase === 1) && <TextField value={adminEditCase.note} id="note" label="비고" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+        {(editCase === 1) && <TextField value={adminEditCase.in} id="in" label="출근시간" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
+        {(editCase === 1) && <TextField value={adminEditCase.out} id="out" label="퇴근시간" onChange={handleValueChange} margin="dense" type="text" fullWidth variant="standard" /> }
       </DialogContent>
       <DialogActions>
         <Button onClick={hdcEditClose}>Cancel</Button>
