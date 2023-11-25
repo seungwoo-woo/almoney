@@ -68,10 +68,10 @@ function AdminPage() {
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#1976d2',
       color: theme.palette.common.white,
-      fontSize: 11,
+      fontSize: 12,
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 11,
+      fontSize: 12,
     },
   }));
 
@@ -157,12 +157,12 @@ function AdminPage() {
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 400}} align='center' >No</StyledTableCell>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 400}} align='center' >이름</StyledTableCell>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 400}} align='center' >권한</StyledTableCell>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 400}} align='center' >출근</StyledTableCell>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
-              <StyledTableCell style={{fontSize: 11, fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 400}} align='center' >No</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 400}} align='center' >이름</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 400}} align='center' >권한</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 400}} align='center' >출근</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
+              <StyledTableCell style={{fontSize: 12, fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
