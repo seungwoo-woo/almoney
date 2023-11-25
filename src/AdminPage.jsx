@@ -160,7 +160,8 @@ function AdminPage() {
               <StyledTableCell style={{fontWeight: 400}} align='center' >No.</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >사용자</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >권한</StyledTableCell>
-              <StyledTableCell style={{fontWeight: 400}} align='center' >비고</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >출근</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >퇴근</StyledTableCell>
               <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT.</StyledTableCell>
             </TableRow>
           </TableHead>
@@ -172,7 +173,8 @@ function AdminPage() {
                     no = {index + 1}
                     cell1 = {item.name}
                     cell2 = {item.userGrade}
-                    cell3 = {item.note}
+                    cell3 = {item['w-in']}
+                    cell4 = {item['w-out']}
                     getDataRefresh={getUserList}
                     editCase={editCase}
                     />

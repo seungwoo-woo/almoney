@@ -12,7 +12,7 @@ import AdminCellEdit from './AdminCellEdit';
 function AddOneRow(props) {
 
 // Initialize Variable ==================================================
-const {id, no, cell1, cell2, cell3, getDataRefresh, editCase} = props;
+const {id, no, cell1, cell2, cell3, cell4, getDataRefresh, editCase} = props;
 
 // Table style ----------------------------------------------------
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
@@ -32,6 +32,7 @@ return (
     <TableCell align='center'>{cell1}</TableCell>
     <TableCell align='center'>{cell2}</TableCell>
     <TableCell align='center'>{cell3}</TableCell>
+    <TableCell align='center'>{cell4}</TableCell>
     <TableCell align='center'><AdminCellEdit id={id} getDataRefresh={getDataRefresh} editCase={editCase}/></TableCell>
   </StyledTableRow>
 );
