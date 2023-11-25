@@ -68,10 +68,10 @@ function AdminPage() {
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: '#1976d2',
       color: theme.palette.common.white,
-      fontSize: 14,
+      fontSize: 12,
     },
     [`&.${tableCellClasses.body}`]: {
-      fontSize: 14,
+      fontSize: 12,
     },
   }));
 
