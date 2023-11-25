@@ -157,12 +157,12 @@ function AdminPage() {
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{fontWeight: 400}} align='center' >No.</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 400}} align='center' >No</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >이름</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >권한</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >출근</StyledTableCell>
               <StyledTableCell style={{fontWeight: 400}} align='center' >퇴근</StyledTableCell>
-              <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT.</StyledTableCell>
+              <StyledTableCell style={{fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>

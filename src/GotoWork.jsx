@@ -23,6 +23,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
+import { Minimize } from '@mui/icons-material';
 
 
 // Initialize Firebase ==================================================
@@ -41,6 +42,10 @@ function GotoWork() {
   let isWorkTime = false
   let isGooutWorkTime = false
   let goToWorkNo = 0
+
+  const [ userInTime, setUserInTime ] = useState(8)
+  const [ userOutTime, setUserOutTime ] = useState(17)
+
 
   const today = new Date();
   const year = String(today.getFullYear());
@@ -65,17 +70,23 @@ function GotoWork() {
     navigate('/dashBoard')
   }
 
-  if (1 <= hours && 9 >= hours) {
-    isGotoWorkTime = true
-  }
 
-  if (9 < hours && 15 > hours) {
-    isWorkTime = true
-  }
+  if (userInTime && userOutTime) {
 
-  if (15 <= hours && 24 >= hours) {
-    isGooutWorkTime = true
+    if ((Number(userInTime)-3) <= hours &&  hours < Number(userInTime) && minutes <= 59) {
+      isGotoWorkTime = true
+    }
+  
+    if (Number(userInTime) <= hours && hours <= (Number(userOutTime)-1) && minutes <= 59) {
+      isWorkTime = true
+    }
+  
+    if (Number(userOutTime) <= hours && hours <= 24) {
+      isGooutWorkTime = true
+    }
+
   }
+  
 
   
 
@@ -110,6 +121,8 @@ function GotoWork() {
         setUserCompany(userCompany);
         setUserName(userName);
         setUserGrade(userGrade);
+        setUserInTime(doc.data().in);
+        setUserOutTime(doc.data().out);
         });
       } else {
         navigate('/');
