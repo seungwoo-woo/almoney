@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { UserCompanyContext } from './context/UserCompanyContext';
-import { UserNameContext } from './context/UserNameContext';
-import { UserGradeContext } from './context/UserGradeContext';
+import { UserCompanyContext } from './context/UserCompanyContext.js';
+import { UserNameContext } from './context/UserNameContext.js';
+import { UserGradeContext } from './context/UserGradeContext.js';
 import { useNavigate } from 'react-router-dom';
 import Cell from './Cell.jsx';
 import ResponsiveAppBar from './ResponsiveAppBar.jsx';
@@ -24,7 +24,7 @@ const auth = getAuth(app);
 
 
 
-function DashBoard(props) {
+function DashBoard2(props) {
 
   const { YearAndMonth } = props
 
@@ -95,7 +95,6 @@ useEffect(()=>{
 
   return (
     <>
-    <ResponsiveAppBar />
     {goToWorkData ? goToWorkData.map((d, index) => (
 
       (d ? <Cell dailyData = {d} date = {index+1} /> : "")
@@ -115,4 +114,4 @@ useEffect(()=>{
   )
 }
 
-export default DashBoard
+export default DashBoard2

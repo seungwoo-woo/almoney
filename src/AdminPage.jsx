@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar'
 import AddOneRow from './AddOneRow';
 import { Button, Card } from '@mui/material';
+import DashBoard2 from './DashBoard2';
+
 
 
 // firebase import=======================================================
@@ -20,6 +22,7 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
+import { SignalCellular2BarOutlined } from '@mui/icons-material';
 
 
 
@@ -60,8 +63,11 @@ function AdminPage() {
   const { setUserGrade }= useContext(UserGradeContext);
 
   const [userList, setUserList] = useState([])
+  const [haveMonth, setHaveMonth] = useState([])
   const [editCase, setEditCase] = useState()
   const [openEmployee, setOpenEmployee] = useState(false)
+  const [openMonthData, setOpenMonthData] = useState(false)
+
 
   // Table style ----------------------------------------------------
   const StyledTableCell = styled(TableCell)(({ theme }) => ({
@@ -91,7 +97,16 @@ function AdminPage() {
   const handleClickEmployee = async() => {
     setEditCase(1)
     setOpenEmployee(true)
+    setOpenMonthData(false)
   }
+
+
+  const handleClickMonthData = async() => {
+    setEditCase(2)
+    setOpenEmployee(false)
+    setOpenMonthData(true)
+  }
+
 
 
   // useEffect 1 Start ========================================================
@@ -142,6 +157,35 @@ function AdminPage() {
 
 
 
+    // useEffect Start 월별 출퇴근 기록 가져오기 ----------------------------------------
+    useEffect(()=> {
+
+      const getMonthData = async () => {
+  
+        let tempArray = []
+        let tempArray2 = []            
+        const querySnapshot = await getDocs(collection(db, userCompany));
+  
+        querySnapshot.forEach((doc) => {
+          tempArray.push(doc.data())
+          tempArray2.push(doc.id)
+          });
+
+          console.log(tempArray)
+          console.log(tempArray2)
+
+        setHaveMonth(tempArray2);  
+
+      } // function End --------------------------------------------------
+  
+      if(userCompany) {
+        getMonthData() }
+  
+    }, [userCompany]) 
+  // useEffect End -------------------------------------------------------------------
+
+
+
   return (
     <>
       <ResponsiveAppBar />
@@ -149,20 +193,22 @@ function AdminPage() {
       <Card sx={{ minWidth: 275, m: 1, pt: 0.5, flexFlow: 'wrap' }} >
       <Breadcrumbs aria-label="breadcrumb">
         <Button onClick={handleClickEmployee}>직원관리</Button>
-        <Button>추가</Button>
+        <Button onClick={handleClickMonthData}>월간 출퇴근 현황</Button>
+        <Button>추가버튼</Button>
       </Breadcrumbs>
       </Card>
 
+      {/* 직원 관리 페이지 */}
       {openEmployee && <Card sx={{ minWidth: 275, m: 1, flexFlow: 'wrap' }}>        
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >No</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >이름</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >권한</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >출근</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
+              <StyledTableCell width='1' style={{fontSize: 14, fontWeight: 400}} align='center' >No</StyledTableCell>
+              <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >이름</StyledTableCell>
+              <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >권한</StyledTableCell>
+              <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >출근</StyledTableCell>
+              <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
+              <StyledTableCell  style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -183,7 +229,16 @@ function AdminPage() {
             }
           </TableBody>
         </Table>
-      </Card>}      
+      </Card>}  
+
+
+      {/* 월별 출근현황 */}
+      {openMonthData && <DashBoard2 YearAndMonth={haveMonth[0]}/>}
+
+
+
+
+
     </>
   )
 }
