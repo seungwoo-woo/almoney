@@ -31,14 +31,20 @@ import { UserGradeContext } from './context/UserGradeContext';
 // color="text.secondary"
 function Cell(props) {
 
-  const { dailyData, date } = props;
+  const { dailyData, date, year, month } = props;
+
+  console.log( year, month, date)
+
+  console.log((new Date(year, month, date)))
 
   const { userName } = useContext(UserNameContext);
   const { userGrade } = useContext(UserGradeContext);
 
-  const today = new Date();
-  const year = String(today.getFullYear());
-  const month = String(today.getMonth());
+  // const today = new Date();
+  // const year = String(today.getFullYear());
+  // const month = String(today.getMonth());
+  // const year = '2023'
+  // const month = '11'
 
   let dayColor = ''
   let peopleColor = ''

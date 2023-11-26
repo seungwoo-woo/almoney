@@ -27,7 +27,8 @@ const auth = getAuth(app);
 function DashBoard(props) {
 
   const { YearAndMonth } = props
-
+  const year = YearAndMonth.substr(0, 4)
+  const month = Number(YearAndMonth.substr(4,)) - 1
   const navigate = useNavigate();
 
   // const today = new Date();
@@ -98,7 +99,7 @@ useEffect(()=>{
     <ResponsiveAppBar />
     {goToWorkData ? goToWorkData.map((d, index) => (
 
-      (d ? <Cell dailyData = {d} date = {index+1} /> : "")
+      (d ? <Cell dailyData = {d} date = {index+1} year = {year} month = {month}/> : "")
 
       // (d ? d.map((i) => {
       //         return (

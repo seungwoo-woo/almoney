@@ -13,7 +13,6 @@ import ResponsiveAppBar from './ResponsiveAppBar'
 import AddOneRow from './AddOneRow';
 import { Button, Card } from '@mui/material';
 import DashBoard2 from './DashBoard2';
-import Autocomplete from '@mui/material/Autocomplete';
 
 
 
@@ -75,12 +74,13 @@ function AdminPage() {
 
   const [ userList, setUserList ] = useState([])
   const [ haveMonth, setHaveMonth ] = useState([])
-  const [findInputValue, setFindInputValue] = useState()
-  const [ toFindMonth, setToFindMonth ]= useState()
-  const [ selectMonth, setSelectMonth ] = useState()
+  const [ toFindMonth, setToFindMonth ]= useState([YearAndMonth])
+  const [ selectMonth, setSelectMonth ] = useState(YearAndMonth)
   const [ editCase, setEditCase ] = useState()
   const [ openEmployee, setOpenEmployee ] = useState(false)
   const [ openMonthData, setOpenMonthData ] = useState(false)
+  const [ openFindResults, setOpenFindResults] = useState(false)
+
 
 
   // Table style ----------------------------------------------------
@@ -122,18 +122,19 @@ function AdminPage() {
   }
 
 
-  const findFunction = async() => {
-    console.log('================')
-    console.log(selectMonth)
-    setToFindMonth(selectMonth)
-  }
-
-
   const handleSelectChange = (e) => {  
-    const keyValue = e.target.value
- 
-    setSelectMonth(keyValue);
+    const keyValue = e.target.value 
+    setSelectMonth(keyValue)
+    let arrayCopy = toFindMonth
+    arrayCopy[0]=keyValue
+    setToFindMonth(arrayCopy)
+
+    setOpenFindResults(false)
   };
+
+  const findFunction = () => {
+    setOpenFindResults(true)
+  }
 
 
 
@@ -213,7 +214,6 @@ function AdminPage() {
   // useEffect End -------------------------------------------------------------------
 
 
-
   return (
     <>
       <ResponsiveAppBar />
@@ -263,32 +263,23 @@ function AdminPage() {
       </Card>}  
 
 
-      {/* 월별 출근현황 */}
 
-      {/* 검색 기능 구현 --------------------------- */}   
-      {openMonthData && <> 
-        <div style={{ width: 333, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
-        {/* <Autocomplete size="small"
-          value={selectMonth}
-          onChange={(event, newValue) => {
-            setSelectMonth(newValue);
-          }}  
-          InputValue={findInputValue}
-          onInputChange={(event, newInputValue) => {
-            setFindInputValue(newInputValue);
-          }}
-          id="controllable-states-demo"
-          options={haveMonth}
-          sx={{ width: 210 }}
-          renderInput={(params) => <TextField {...params} label="검색년월" />}
-        /> */}
+      {/* 월별 출근현황 ================================================= */}
 
+        
+      {openMonthData && <>
+
+      {/* 검색 기능 --------------------------- */} 
+
+      <div style={{ width: 333, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
         <FormControl  size="small" fullWidth>
         <InputLabel id="demo-simple-select">검색년월</InputLabel>
           <Select
             labelId="demo-simple-select-label"
             label="검색년월"
             name="selectMonth"                      
+            // value={selectMonth}
+            // onChange={handleSelectChange}
             value={selectMonth}
             onChange={handleSelectChange}
           >
@@ -298,23 +289,33 @@ function AdminPage() {
           </Select>
         </FormControl>
 
-
-
-        <Button sx={{height:'40px', width: '80px'}} variant='contained' color='success' onClick={findFunction}>
+        <Button sx={{height:'40px', width: '80px', marginLeft: 0.5}} variant='contained' color='success' onClick={findFunction}>
           검색
         </Button>
-        {/* {toFindMonth} */}
         </div>
 
         {/* 검색 기능 구현 --------------------------- */}
-
-
-      {/* <DashBoard2 YearAndMonth={haveMonth[0]}/>  */}
-      {toFindMonth && <DashBoard2 YearAndMonth={toFindMonth}/>} 
       </>}
 
+      {/* 검색 결과 보이기 ----------------------------------- */}
+      {openFindResults && <>
+        {toFindMonth.map((m, idx)=>{
+          return <DashBoard2 key={idx} YearAndMonth={m}/>
+        })}
+        </>
+      }
+      {/* 검색 결과 보이기 ----------------------------------- */}
 
-      {/* 추가 메뉴 */}
+
+      
+
+
+
+
+
+
+
+      {/* 추가 메뉴 =======================================================*/}
 
 
 
