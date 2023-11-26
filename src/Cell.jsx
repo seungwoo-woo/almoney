@@ -26,28 +26,11 @@ import { UserGradeContext } from './context/UserGradeContext';
 // }): "")
 
 
-
-
-// color="text.secondary"
 function Cell(props) {
 
   const { dailyData, date, year, month } = props;
-
-  console.log( year, month, date)
-
-  console.log((new Date(year, month, date)))
-
   const { userName } = useContext(UserNameContext);
-  const { userGrade } = useContext(UserGradeContext);
-
-  // const today = new Date();
-  // const year = String(today.getFullYear());
-  // const month = String(today.getMonth());
-  // const year = '2023'
-  // const month = '11'
-
   let dayColor = ''
-  let peopleColor = ''
   let day = ''
 
   if((new Date(year, month, date)).getDay()===0) {
@@ -80,7 +63,6 @@ function Cell(props) {
     day = '(토)'
   }
 
-
   return (
     <Card sx={{ minWidth: 275, m: 0.5, pb: 0, flexFlow: 'wrap' }}>
       <CardContent>        
@@ -89,7 +71,6 @@ function Cell(props) {
         </Typography>
         <Stack  direction="row" spacing={1}>
         {dailyData.map(d => {
-
           if(d['name'] === userName) {
             return (          
               <Avatar sx={{ bgcolor: deepOrange[500], fontSize: 12 }}>{d['name']}</Avatar>
@@ -98,8 +79,7 @@ function Cell(props) {
             return (          
               <Avatar sx={{ bgcolor: 'GrayText', fontSize: 12 }}>{d['name']}</Avatar>
               )
-          }
-          
+          }          
         })} 
         </Stack>
       </CardContent>

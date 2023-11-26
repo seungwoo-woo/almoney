@@ -76,6 +76,7 @@ function AdminPage() {
   const [ haveMonth, setHaveMonth ] = useState([])
   const [ toFindMonth, setToFindMonth ]= useState([YearAndMonth])
   const [ selectMonth, setSelectMonth ] = useState(YearAndMonth)
+  const [ excelData, setExcelData ] = useState()
   const [ editCase, setEditCase ] = useState()
   const [ openEmployee, setOpenEmployee ] = useState(false)
   const [ openMonthData, setOpenMonthData ] = useState(false)
@@ -112,6 +113,7 @@ function AdminPage() {
     setEditCase(1)
     setOpenEmployee(true)
     setOpenMonthData(false)
+    setOpenFindResults(false)
   }
 
 
@@ -126,14 +128,19 @@ function AdminPage() {
     const keyValue = e.target.value 
     setSelectMonth(keyValue)
     let arrayCopy = toFindMonth
-    arrayCopy[0]=keyValue
+    arrayCopy[0] = keyValue
     setToFindMonth(arrayCopy)
-
     setOpenFindResults(false)
   };
 
+
   const findFunction = () => {
     setOpenFindResults(true)
+  }
+
+
+  const exportExcel = () => {
+    console.log(excelData)
   }
 
 
@@ -186,31 +193,31 @@ function AdminPage() {
 
 
 
-    // useEffect Start 월별 출퇴근 기록 가져오기 ----------------------------------------
-    useEffect(()=> {
+  // useEffect Start 월별 출퇴근 기록 가져오기 ----------------------------------------
+  useEffect(()=> {
 
-      const getMonthData = async () => {
-  
-        let tempArray = []
-        let tempArray2 = []            
-        const querySnapshot = await getDocs(collection(db, userCompany));
-  
-        querySnapshot.forEach((doc) => {
-          tempArray.push(doc.data())
-          tempArray2.push(doc.id)
-          });
+    const getMonthData = async () => {
 
-          console.log(tempArray)
-          console.log(tempArray2)
+      let tempArray = []
+      let tempArray2 = []            
+      const querySnapshot = await getDocs(collection(db, userCompany));
 
-        setHaveMonth(tempArray2);  
+      querySnapshot.forEach((doc) => {
+        tempArray.push(doc.data())
+        tempArray2.push(doc.id)
+        });
 
-      } // function End --------------------------------------------------
-  
-      if(userCompany) {
-        getMonthData() }
-  
-    }, [userCompany]) 
+        console.log(tempArray)
+        console.log(tempArray2)
+
+      setHaveMonth(tempArray2);  
+
+    } // function End --------------------------------------------------
+
+    if(userCompany) {
+      getMonthData() }
+
+  }, [userCompany]) 
   // useEffect End -------------------------------------------------------------------
 
 
@@ -226,7 +233,7 @@ function AdminPage() {
       </Breadcrumbs>
       </Card>
 
-      {/* 직원 관리 페이지 */}
+      {/* 직원 정보 페이지 */}
       {openEmployee && <Card sx={{ minWidth: 275, m: 0.5, flexFlow: 'wrap' }}>        
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
@@ -264,12 +271,12 @@ function AdminPage() {
 
 
 
-      {/* 월별 출근현황 ================================================= */}
+      {/* 월별 출근 현황  페이지 ================================================= */}
 
-        
+      
       {openMonthData && <>
 
-      {/* 검색 기능 --------------------------- */} 
+      {/* 검색 창 구현 --------------------------- */} 
 
       <div style={{ width: 333, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
         <FormControl  size="small" fullWidth>
@@ -278,8 +285,6 @@ function AdminPage() {
             labelId="demo-simple-select-label"
             label="검색년월"
             name="selectMonth"                      
-            // value={selectMonth}
-            // onChange={handleSelectChange}
             value={selectMonth}
             onChange={handleSelectChange}
           >
@@ -289,29 +294,28 @@ function AdminPage() {
           </Select>
         </FormControl>
 
-        <Button sx={{height:'40px', width: '80px', marginLeft: 0.5}} variant='contained' color='success' onClick={findFunction}>
+        <Button sx={{height:'40px', width: '90px', marginLeft: 0.5}} variant='contained' onClick={findFunction}>
           검색
         </Button>
-        </div>
-
-        {/* 검색 기능 구현 --------------------------- */}
+        {!openFindResults && <Button sx={{height:'40px', width: '70px', marginLeft: 0.5}} variant='contained' disabled color="secondary" >
+          Excel
+        </Button>}
+        {openFindResults && <Button sx={{height:'40px', width: '70px', marginLeft: 0.5}} variant='contained' color="secondary" onClick={exportExcel}>
+          Excel
+        </Button>}
+        </div>        
       </>}
+      {/* 검색 창 구현 -------------------------------------- */}
+
 
       {/* 검색 결과 보이기 ----------------------------------- */}
       {openFindResults && <>
         {toFindMonth.map((m, idx)=>{
-          return <DashBoard2 key={idx} YearAndMonth={m}/>
+          return <DashBoard2 key={idx} YearAndMonth={m} setExcelData={setExcelData}/>
         })}
         </>
       }
       {/* 검색 결과 보이기 ----------------------------------- */}
-
-
-      
-
-
-
-
 
 
 

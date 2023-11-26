@@ -4,7 +4,6 @@ import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import { useNavigate } from 'react-router-dom';
 import Cell from './Cell.jsx';
-import ResponsiveAppBar from './ResponsiveAppBar.jsx';
 
 
 // firebase import=======================================================
@@ -26,7 +25,7 @@ const auth = getAuth(app);
 
 function DashBoard(props) {
 
-  const { YearAndMonth } = props
+  const { YearAndMonth, setExcelData } = props
 
   const year = YearAndMonth.substr(0, 4)
   const month = Number(YearAndMonth.substr(4,)) - 1
@@ -87,6 +86,7 @@ useEffect(()=>{
         tempArray.push(querySnapshot.data()[i])}
 
       setGoToWorkData(tempArray);  
+      setExcelData(tempArray)
     } // function End --------------------------------------------------
 
     if(userCompany) {
