@@ -17,7 +17,7 @@ function App() {
   const today = new Date();
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1);
-  const findMonth = year + month;
+  const YearAndMonth = year + month;
 
   const [ userCompany, setUserCompany ] = useState(null);
   const [ userName, setUserName ] = useState(null);
@@ -33,7 +33,7 @@ function App() {
             <Route path = "/" element={<SignIn />} />
             <Route path = "/gotoWork" element={<GotoWork />} />
             <Route path = "/signUp" element={<SignUp />} />
-            <Route path = "/dashBoard" element={<DashBoard YearAndMonth={findMonth}/>} />
+            <Route path = "/dashBoard" element={<DashBoard YearAndMonth={YearAndMonth}/>} />
             <Route path = "/admin" element={<AdminPage />} /> 
           </Routes>
         </Router>

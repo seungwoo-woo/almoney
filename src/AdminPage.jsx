@@ -4,7 +4,7 @@ import { emphasize, styled } from '@mui/material/styles';
 import Chip from '@mui/material/Chip';
 import HomeIcon from '@mui/icons-material/Home';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Table, IconButton, TableHead, TableBody, TableCell, TableRow, TableFooter, TablePagination, tableCellClasses, Container } from "@mui/material";
+import { Table, IconButton, TableHead, TableBody, TableCell, TableRow, TableFooter, TablePagination, tableCellClasses, Container, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
 import { UserCompanyContext } from './context/UserCompanyContext';
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
@@ -13,6 +13,12 @@ import ResponsiveAppBar from './ResponsiveAppBar'
 import AddOneRow from './AddOneRow';
 import { Button, Card } from '@mui/material';
 import DashBoard2 from './DashBoard2';
+import Autocomplete from '@mui/material/Autocomplete';
+
+
+
+
+
 
 
 
@@ -57,16 +63,24 @@ const StyledBreadcrumb = styled(Chip)(({ theme }) => {
 
 function AdminPage() {
 
+  const today = new Date();
+  const year = String(today.getFullYear());
+  const month = String(today.getMonth() + 1);
+  const YearAndMonth = year + month;
+
   const navigate = useNavigate();
   const { userCompany, setUserCompany } = useContext(UserCompanyContext);
   const { setUserName } = useContext(UserNameContext);
   const { setUserGrade }= useContext(UserGradeContext);
 
-  const [userList, setUserList] = useState([])
-  const [haveMonth, setHaveMonth] = useState([])
-  const [editCase, setEditCase] = useState()
-  const [openEmployee, setOpenEmployee] = useState(false)
-  const [openMonthData, setOpenMonthData] = useState(false)
+  const [ userList, setUserList ] = useState([])
+  const [ haveMonth, setHaveMonth ] = useState([])
+  const [findInputValue, setFindInputValue] = useState()
+  const [ toFindMonth, setToFindMonth ]= useState()
+  const [ selectMonth, setSelectMonth ] = useState()
+  const [ editCase, setEditCase ] = useState()
+  const [ openEmployee, setOpenEmployee ] = useState(false)
+  const [ openMonthData, setOpenMonthData ] = useState(false)
 
 
   // Table style ----------------------------------------------------
@@ -106,6 +120,20 @@ function AdminPage() {
     setOpenEmployee(false)
     setOpenMonthData(true)
   }
+
+
+  const findFunction = async() => {
+    console.log('================')
+    console.log(selectMonth)
+    setToFindMonth(selectMonth)
+  }
+
+
+  const handleSelectChange = (e) => {  
+    const keyValue = e.target.value
+ 
+    setSelectMonth(keyValue);
+  };
 
 
 
@@ -192,8 +220,8 @@ function AdminPage() {
       
       <Card sx={{ minWidth: 275, m: 0.5, pt: 0.5, flexFlow: 'wrap' }} >
       <Breadcrumbs aria-label="breadcrumb">
-        <Button onClick={handleClickEmployee}>직원관리</Button>
-        <Button onClick={handleClickMonthData}>월간 출퇴근 현황</Button>
+        <Button onClick={handleClickEmployee}>직원정보</Button>
+        <Button onClick={handleClickMonthData}>출퇴근 현황</Button>
         <Button>추가버튼</Button>
       </Breadcrumbs>
       </Card>
@@ -207,7 +235,7 @@ function AdminPage() {
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>이름</StyledTableCell>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>권한</StyledTableCell>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' colSpan={2}>시간</StyledTableCell>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' rowSpan={2}>수정</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 600, color: 'yellow'}} align='center' rowSpan={2}>수정</StyledTableCell>
             </TableRow>
             <TableRow>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >출</StyledTableCell>
@@ -236,7 +264,54 @@ function AdminPage() {
 
 
       {/* 월별 출근현황 */}
-      {openMonthData && <DashBoard2 YearAndMonth={haveMonth[0]}/>}
+
+      {/* 검색 기능 구현 --------------------------- */}   
+      {openMonthData && <> 
+        <div style={{ width: 400, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
+        {/* <Autocomplete size="small"
+          value={selectMonth}
+          onChange={(event, newValue) => {
+            setSelectMonth(newValue);
+          }}  
+          InputValue={findInputValue}
+          onInputChange={(event, newInputValue) => {
+            setFindInputValue(newInputValue);
+          }}
+          id="controllable-states-demo"
+          options={haveMonth}
+          sx={{ width: 210 }}
+          renderInput={(params) => <TextField {...params} label="검색년월" />}
+        /> */}
+
+        <FormControl  size="small" fullWidth>
+        <InputLabel id="demo-simple-select">검색년월</InputLabel>
+          <Select
+            labelId="demo-simple-select-label"
+            label="검색년월"
+            name="telCom"                      
+            value={selectMonth}
+            onChange={handleSelectChange}
+          >
+            {haveMonth.map((mon, index) => (
+              <MenuItem key={index} value={mon}>{mon}</MenuItem>)
+            )}
+          </Select>
+        </FormControl>
+
+
+
+        <Button sx={{height:'40px', width: '80px'}} variant='contained' color='success' onClick={findFunction}>
+          검색
+        </Button>
+        {/* {toFindMonth} */}
+        </div>
+
+        {/* 검색 기능 구현 --------------------------- */}
+
+
+      {/* <DashBoard2 YearAndMonth={haveMonth[0]}/>  */}
+      {toFindMonth && <DashBoard2 YearAndMonth={toFindMonth}/>} 
+      </>}
 
 
       {/* 추가 메뉴 */}
