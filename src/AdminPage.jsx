@@ -267,7 +267,7 @@ function AdminPage() {
 
       {/* 검색 기능 구현 --------------------------- */}   
       {openMonthData && <> 
-        <div style={{ width: 320, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
+        <div style={{ width: 340, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
         {/* <Autocomplete size="small"
           value={selectMonth}
           onChange={(event, newValue) => {
@@ -288,7 +288,7 @@ function AdminPage() {
           <Select
             labelId="demo-simple-select-label"
             label="검색년월"
-            name="telCom"                      
+            name="selectMonth"                      
             value={selectMonth}
             onChange={handleSelectChange}
           >
