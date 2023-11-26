@@ -203,12 +203,15 @@ function AdminPage() {
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
-              <StyledTableCell width='1' style={{fontSize: 14, fontWeight: 400}} align='center' >No</StyledTableCell>
-              <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >이름</StyledTableCell>
-              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >권한</StyledTableCell>
-              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >출근</StyledTableCell>
-              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
-              <StyledTableCell width='30'  style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' >수정</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>No</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>이름</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>권한</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' colSpan={2}>시간</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' rowSpan={2}>수정</StyledTableCell>
+            </TableRow>
+            <TableRow>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >출</StyledTableCell>
+              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' >퇴</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
