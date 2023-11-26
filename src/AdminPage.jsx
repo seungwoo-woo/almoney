@@ -267,7 +267,7 @@ function AdminPage() {
 
       {/* 검색 기능 구현 --------------------------- */}   
       {openMonthData && <> 
-        <div style={{ width: 300, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
+        <div style={{ width: 320, display: 'flex',  justifyContent: 'space-between', alignItems: 'flex-end', marginTop: 20, marginLeft: 3, marginBottom: 10 }}>
         {/* <Autocomplete size="small"
           value={selectMonth}
           onChange={(event, newValue) => {
