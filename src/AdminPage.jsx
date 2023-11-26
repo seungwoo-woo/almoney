@@ -203,7 +203,7 @@ function AdminPage() {
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
-              <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>No</StyledTableCell>
+              <StyledTableCell width='1' style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>No</StyledTableCell>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>이름</StyledTableCell>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' rowSpan={2}>권한</StyledTableCell>
               <StyledTableCell style={{fontSize: 14, fontWeight: 400}} align='center' colSpan={2}>시간</StyledTableCell>
