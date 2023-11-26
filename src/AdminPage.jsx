@@ -190,7 +190,7 @@ function AdminPage() {
     <>
       <ResponsiveAppBar />
       
-      <Card sx={{ minWidth: 275, m: 1, pt: 0.5, flexFlow: 'wrap' }} >
+      <Card sx={{ minWidth: 275, m: 0.5, pt: 0.5, flexFlow: 'wrap' }} >
       <Breadcrumbs aria-label="breadcrumb">
         <Button onClick={handleClickEmployee}>직원관리</Button>
         <Button onClick={handleClickMonthData}>월간 출퇴근 현황</Button>
@@ -199,7 +199,7 @@ function AdminPage() {
       </Card>
 
       {/* 직원 관리 페이지 */}
-      {openEmployee && <Card sx={{ minWidth: 275, m: 1, flexFlow: 'wrap' }}>        
+      {openEmployee && <Card sx={{ minWidth: 275, m: 0.5, flexFlow: 'wrap' }}>        
         <Table stickyHeader size='small' aria-label="sticky table">        
           <TableHead>
             <TableRow>
