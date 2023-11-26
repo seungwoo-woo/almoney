@@ -205,10 +205,10 @@ function AdminPage() {
             <TableRow>
               <StyledTableCell width='1' style={{fontSize: 14, fontWeight: 400}} align='center' >No</StyledTableCell>
               <StyledTableCell  style={{fontSize: 14, fontWeight: 400}} align='center' >이름</StyledTableCell>
-              <StyledTableCell width='40'   style={{fontSize: 14, fontWeight: 400}} align='center' >권한</StyledTableCell>
-              <StyledTableCell width='40'   style={{fontSize: 14, fontWeight: 400}} align='center' >출근</StyledTableCell>
-              <StyledTableCell width='40'   style={{fontSize: 14, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
-              <StyledTableCell width='40'  style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' >ACT</StyledTableCell>
+              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >권한</StyledTableCell>
+              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >출근</StyledTableCell>
+              <StyledTableCell width='30'   style={{fontSize: 14, fontWeight: 400}} align='center' >퇴근</StyledTableCell>
+              <StyledTableCell width='30'  style={{fontSize: 14, fontWeight: 600, color: "yellow"}} align='center' >수정</StyledTableCell>
             </TableRow>
           </TableHead>
           <TableBody>
