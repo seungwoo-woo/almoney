@@ -27,15 +27,9 @@ const auth = getAuth(app);
 function DashBoard(props) {
 
   const { YearAndMonth } = props
-  const year = YearAndMonth.substr(0, 4)
-  const month = Number(YearAndMonth.substr(4,)) - 1
   const navigate = useNavigate();
-
-  // const today = new Date();
-  // const year = String(today.getFullYear());
-  // const month = String(today.getMonth() + 1);
-  // const date = String(today.getDate());
-  // const YearAndMonth = year + month;
+  const year = YearAndMonth.substr(0, 4)
+  const month = Number(YearAndMonth.substr(4,)) - 1  
 
   const [ goToWorkData, setGoToWorkData ] = useState([]);
   const { userCompany, setUserCompany } = useContext(UserCompanyContext);
@@ -96,23 +90,12 @@ useEffect(()=>{
 
   return (
     <>
-    <ResponsiveAppBar />
-    {goToWorkData ? goToWorkData.map((d, index) => (
-
-      (d ? <Cell key={index} dailyData = {d} date = {index+1} year = {year} month = {month}/> : "")
-
-      // (d ? d.map((i) => {
-      //         return (
-      //           <>
-      //           <div>{(new Date(i['in']['seconds']*1000)).toLocaleString()}</div>
-      //           <div>{i['name']}</div>
-      //           </>)
-      //       }): "")
-    )
-    )      
-  : ""}
+      <ResponsiveAppBar />
+      {goToWorkData ? goToWorkData.map((d, index) => (
+        (d ? <Cell key={index} dailyData={d} date={index+1} year={year} month={month}/> : "")
+      )
+      ) : ""}
     </>
-
   )
 }
 

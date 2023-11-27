@@ -13,6 +13,9 @@ import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
 import { useNavigate } from 'react-router-dom';
 import Modal from '@mui/material/Modal';
+import MyGeo from './MyGeo.jsx';
+import { Minimize } from '@mui/icons-material';
+
 
 
 
@@ -23,8 +26,6 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
-import { Minimize } from '@mui/icons-material';
-import MyGeo from './MyGeo.jsx';
 
 
 // Initialize Firebase ==================================================
@@ -42,7 +43,7 @@ function GotoWork() {
   let isGotoWorkTime = false
   let isWorkTime = false
   let isGooutWorkTime = false
-  let goToWorkNo = 0
+  // let goToWorkNo = 0
 
   const [ userInTime, setUserInTime ] = useState(8)
   const [ userOutTime, setUserOutTime ] = useState(17)
@@ -64,8 +65,8 @@ function GotoWork() {
   const [isCompUpdateDialogOpen, setIsCompUpdateDialogOpen] = useState(false);
   const [msg, setMsg] = useState('출근');
   const [dailyData, setDailyData] = useState(['']);
-
   const [open, setOpen] = React.useState(true);
+
 
   const handleClose = () => {
     setOpen(false);
@@ -74,23 +75,16 @@ function GotoWork() {
 
 
   if (userInTime && userOutTime) {
-
     if ((Number(userInTime)-3) <= hours &&  hours < Number(userInTime) && minutes <= 59) {
       isGotoWorkTime = true
-    }
-  
+    }  // 출근 시간
     if (Number(userInTime) <= hours && hours <= (Number(userOutTime)-1) && minutes <= 59) {
       isWorkTime = true
-    }
-  
+    }  // 일과 시간
     if (Number(userOutTime) <= hours && hours <= 24) {
       isGooutWorkTime = true
-    }
-
+    }  // 퇴근 시간
   }
-  
-
-  
 
 
   // --------------------------------------------------------------------
@@ -142,7 +136,6 @@ function GotoWork() {
 
     const getDailyData = async () => {
 
-      // const querySnapshot = await getDoc(doc(db, "HeeNWoo", YearAndMonth));
       const querySnapshot = await getDoc(doc(db, userCompany, YearAndMonth));
 
       if (!querySnapshot.exists()) {
@@ -376,7 +369,6 @@ function GotoWork() {
         <Button onClick={handleClickCompUpdateDialogClose}>OK</Button>
       </DialogActions>
     </Dialog>
-
 
     </>
   )

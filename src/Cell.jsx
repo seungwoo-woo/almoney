@@ -10,20 +10,8 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack } from '@mui/material';
 import { deepOrange, deepPurple, purple } from '@mui/material/colors';
 
-
 import { UserNameContext } from './context/UserNameContext';
 import { UserGradeContext } from './context/UserGradeContext';
-
-
-// (d ? d.map((i) => {
-//   return (
-//     <>
-//       <div>{index}</div>
-//       <div>{(new Date(i['in']['seconds']*1000)).toLocaleString()}</div>
-//       <div>{i['name']}</div>
-      
-//     </>)
-// }): "")
 
 
 function Cell(props) {

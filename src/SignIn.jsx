@@ -191,8 +191,11 @@ return (
 
             </Grid>
           </Box>
-        </Box>
-      </Grid>
+          <Typography variant="body2" color="text.secondary" align="center" mt={2} >        
+            {'Copyright © '} 희앤우코딩 {'  '} {new Date().getFullYear()} {'.'}
+          </Typography>
+        </Box>        
+      </Grid>      
     </Grid>
   </ThemeProvider>
 
@@ -203,20 +206,20 @@ return (
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
-      <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
-        <ReportIcon sx={{mr: 1}}/>{" 로그인 오류 "}
-      </DialogTitle>
-      <Divider />
-      <DialogContent>      
-        <Typography>
-          {msg}
-        </Typography>
-      </DialogContent>
-      <Divider />
-      <DialogActions>
-        <Button onClick={handleCloseError} autoFocus> OK </Button>          
-      </DialogActions>
-    </Dialog>
+    <DialogTitle sx={{color: pink[500], fontWeight: '400', display: 'flex', alignItems: 'center'}}>
+      <ReportIcon sx={{mr: 1}}/>{" 로그인 오류 "}
+    </DialogTitle>
+    <Divider />
+    <DialogContent>      
+      <Typography>
+        {msg}
+      </Typography>
+    </DialogContent>
+    <Divider />
+    <DialogActions>
+      <Button onClick={handleCloseError} autoFocus> OK </Button>          
+    </DialogActions>
+  </Dialog>
   </>
 );
 

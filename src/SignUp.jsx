@@ -133,7 +133,7 @@ return (
   <ThemeProvider theme={defaultTheme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Box sx={{ marginTop: 5, display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
+      <Box sx={{ marginTop: 3, display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>

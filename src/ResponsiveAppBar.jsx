@@ -138,7 +138,7 @@ return (
           </Box>
 
 
-          {/* 추가 ----------------- */}
+          {/* 화면 작을 때 나오는 AppBar---------- */}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -193,7 +193,7 @@ return (
             {userCompany}
           </Typography>
 
-          {/* 추가 ----------------- */}
+          {/* 화면 작을 때 나오는 AppBar---------- */}
 
 
 
