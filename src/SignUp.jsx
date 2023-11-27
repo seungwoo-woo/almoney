@@ -38,8 +38,6 @@ const db = getFirestore(app);
 const defaultTheme = createTheme();
 
 
-
-
 //  ======================================================================================
 // Function 시작 =========================================================================
 // =======================================================================================
@@ -92,6 +90,8 @@ const handleSubmit = async (event) => {
       company: data.get('company'),
       email: data.get('email'),
       note: '',
+      in: '',
+      out: '',
       isDeleted: 0,
       userGrade: 'D'
     });
@@ -117,15 +117,12 @@ const handleSubmit = async (event) => {
     handleSignUpErrMsgOpen();
     });
 
-
   } else {
     setMsg('password가 일치하지 않습니다. password를 다시 입력하세요.');
     handleSignUpErrMsgOpen();
   }
-
   
 };
-
 
 
 // ------------------------------------------------------------------------------------
@@ -136,7 +133,7 @@ return (
   <ThemeProvider theme={defaultTheme}>
     <Container component="main" maxWidth="xs">
       <CssBaseline />
-      <Box sx={{ marginTop: 8, display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
+      <Box sx={{ marginTop: 5, display: 'flex', flexDirection: 'column', alignItems: 'center'}} >
         <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
           <LockOutlinedIcon />
         </Avatar>
@@ -173,6 +170,9 @@ return (
           </Grid>
         </Box>
       </Box>
+      <Typography variant="body2" color="text.secondary" align="center" mt={2} >        
+        {'Copyright © '} 희앤우코딩 {'  '} {new Date().getFullYear()} {'.'}
+      </Typography>
     </Container>
   </ThemeProvider>
 

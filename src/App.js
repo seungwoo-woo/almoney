@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import GotoWork from './GotoWork';
-import MyGeo from './MyGeo';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 import DashBoard from './DashBoard';
@@ -11,14 +10,13 @@ import { UserGradeContext } from './context/UserGradeContext';
 import AdminPage from './AdminPage';
 
 
-
 function App() {
 
   const today = new Date();
   const year = String(today.getFullYear());
   const month = String(today.getMonth() + 1);
   const YearAndMonth = year + month;
-
+  
   const [ userCompany, setUserCompany ] = useState(null);
   const [ userName, setUserName ] = useState(null);
   const [ userGrade, setUserGrade ] = useState(null);
@@ -41,13 +39,6 @@ function App() {
       </UserNameContext.Provider>
       </UserCompanyContext.Provider>
     </>
-
-
-    // <div className="App">
-      // <AppShell/>
-      
-      // {/* <MyGeo /> */}
-    // </div>
   );
 }
 
