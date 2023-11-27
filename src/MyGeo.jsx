@@ -10,7 +10,8 @@ function MyGeo() {
   const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
   const [dist, setDist] = useState()
   let distance = 0
-  const companyGeo = {latitude: 37.400658384749654, longitude: 126.72240464747604}
+  let msg = '아직 회사에 도착하지 못하셨네요...'
+  const companyGeo = {latitude: 37.40091289517126, longitude: 126.7214352464646}
 
   const haversine = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // 지구 반지름 (단위: 킬로미터)
@@ -56,6 +57,10 @@ function MyGeo() {
     distance = (haversine(coordinates.latitude, coordinates.longitude, companyGeo.latitude, companyGeo.longitude))
   }
 
+  if (distance*1000 < 1000){
+    msg = `회사에 도착하셨네요. ^^`
+  }
+
 
 
 
@@ -69,12 +74,12 @@ function MyGeo() {
         <Divider />
         <Typography variant="body2" sx={{ mb: 0 }} >
           <br />
-          회사에서 {Math.round((distance*1000)*100)/100}m 떨어짐.
+          {msg}
         </Typography>
         <Divider />
         <Typography variant="body2" sx={{ mb: 0 }} color="text.secondary">
           <br />
-          위도 : {coordinates.latitude},   경도 : {coordinates.longitude}
+          거리 : {distance}
         </Typography>
       </CardContent>   
     </Card>
