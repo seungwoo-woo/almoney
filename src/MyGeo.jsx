@@ -2,16 +2,28 @@ import { Card, CardContent, Container, Divider, Paper, Typography } from '@mui/m
 import React, { useState, useEffect } from 'react'
 
 
+// firebase import=======================================================
+import { firebaseConfig } from './Firebase.js';
+import { initializeApp } from "firebase/app";
+import { getFirestore, getDoc, doc, setDoc } from "firebase/firestore";
+
+
+// Initialize Firebase ==================================================
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 // 내위치 37.40091289517126, 126.7214352464646
 // 논현역 37.400658384749654, 126.72240464747604
 // 우리집 37.39457041909897, 126.72365239853332
 
 function MyGeo(props) {
 
-  const {setGeoOk} = props
+  const {setGeoOk, userCompany} = props
   const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
   const [dist, setDist] = useState()
-  const companyGeo = {latitude: 37.39457041909897, longitude: 126.72365239853332}
+  // const companyGeo = {latitude: 37.39457041909897, longitude: 126.72365239853332}
+  const [ companyGeo, setCompanyGeo ] = useState({})
 
   let distance = 0
   let msg = '회사에 안계신가봐요...ㅠㅠ'
@@ -31,8 +43,26 @@ function MyGeo(props) {
     return distance;
   }
 
+  
+  // useEffect Start -------------------------------------------------------------------
+  useEffect(()=> {
+
+    const getCompanyGeoData = async () => {
+
+      const querySnapshot = await getDoc(doc(db, userCompany, 'companyGeo'));
+
+      setCompanyGeo(querySnapshot.data());
+
+    } // function End --------------------------------------------------
+
+    if(userCompany) {
+      getCompanyGeoData() }
+
+  }, [userCompany]) 
+// useEffect End -------------------------------------------------------------------
 
 
+  
   useEffect(() => {
     const getLocation = () => {
       if (navigator.geolocation) {
@@ -51,7 +81,6 @@ function MyGeo(props) {
         console.error('Geolocation is not supported by this browser.');
       }
     };
-
     getLocation();
   }, []);
 

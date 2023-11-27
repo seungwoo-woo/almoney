@@ -323,7 +323,7 @@ function GotoWork() {
     <>
     <ResponsiveAppBar />
     <Container maxWidth='xs' sx={{mt: 5}}>
-      <MyGeo setGeoOk={setGeoOk}/>
+      <MyGeo setGeoOk={setGeoOk} userCompany={userCompany}/>
     </Container>
 
     <Container maxWidth='xs' sx={{mt: 5}}>  
