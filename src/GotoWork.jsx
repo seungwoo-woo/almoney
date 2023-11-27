@@ -333,7 +333,7 @@ function GotoWork() {
         <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled> 퇴근 </Button>
       </Stack>
       }      
-      {isGooutWorkTime &&
+      {isGooutWorkTime && geoOk &&
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} disabled sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} sx={{fontWeight: 600}}> 퇴근 </Button>
