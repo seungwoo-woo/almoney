@@ -10,6 +10,8 @@ import { Avatar, Box, IconButton, Menu, MenuItem, Tooltip } from '@mui/material'
 import { deepOrange } from '@mui/material/colors';
 import AdbIcon from '@mui/icons-material/Adb';
 import MenuIcon from '@mui/icons-material/Menu';
+import DirectionsRunIcon from '@mui/icons-material/DirectionsRun';
+import RunCircleIcon from '@mui/icons-material/RunCircle';
 
 
 // firebase import=======================================================
@@ -107,13 +109,13 @@ return (
   <AppBar position="relative" >
     <Container maxWidth="false">
       <Toolbar disableGutters>        
-        <SatelliteAltTwoToneIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+        <RunCircleIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
         
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             <Typography name='menu1' variant="h5" component="a" href="/dashBoard"
               sx={{ mr: 4, display: { xs: 'none', md: 'flex' }, fontWeight: 400, color:'inherit', textDecoration: 'none' }}
             >
-              IAN Networks
+              {userCompany}
             </Typography>
 
             <Typography variant="h10" component="a" href="/gotoWork"
