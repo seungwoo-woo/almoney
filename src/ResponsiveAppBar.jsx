@@ -175,7 +175,7 @@ return (
               ))}
             </Menu>
           </Box>
-          <SatelliteAltTwoToneIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <RunCircleIcon fontSize="large" sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -190,7 +190,7 @@ return (
               textDecoration: 'none',
             }}
           >
-            IAN Networks
+            {userCompany}
           </Typography>
 
           {/* 추가 ----------------- */}
