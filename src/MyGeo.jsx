@@ -4,14 +4,17 @@ import React, { useState, useEffect } from 'react'
 
 // 내위치 37.40091289517126, 126.7214352464646
 // 논현역 37.400658384749654, 126.72240464747604
+// 우리집 37.39457041909897, 126.72365239853332
 
-function MyGeo() {
+function MyGeo(props) {
 
+  const {setGeoOk} = props
   const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
   const [dist, setDist] = useState()
+  const companyGeo = {latitude: 37.39457041909897, longitude: 126.72365239853332}
+
   let distance = 0
-  let msg = '아직 회사에 도착하지 못하셨네요...'
-  const companyGeo = {latitude: 37.40091289517126, longitude: 126.7214352464646}
+  let msg = '회사에 안계신가봐요...ㅠㅠ'
 
   const haversine = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // 지구 반지름 (단위: 킬로미터)
@@ -58,7 +61,8 @@ function MyGeo() {
   }
 
   if (distance*1000 < 1000){
-    msg = `회사에 도착하셨네요. ^^`
+    msg = `회사에 계시네요... ^^`
+    setGeoOk(true)
   }
 
 

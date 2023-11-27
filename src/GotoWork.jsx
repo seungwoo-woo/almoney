@@ -46,6 +46,7 @@ function GotoWork() {
 
   const [ userInTime, setUserInTime ] = useState(8)
   const [ userOutTime, setUserOutTime ] = useState(17)
+  const [ geoOk, setGeoOk ] = useState(false)
 
 
   const today = new Date();
@@ -329,11 +330,11 @@ function GotoWork() {
     <>
     <ResponsiveAppBar />
     <Container maxWidth='xs' sx={{mt: 5}}>
-      <MyGeo />
+      <MyGeo setGeoOk={setGeoOk}/>
     </Container>
 
     <Container maxWidth='xs' sx={{mt: 5}}>  
-      {isGotoWorkTime &&  
+      {isGotoWorkTime && geoOk && 
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} sx={{fontWeight: 600}}> 출근 </Button>
         <Button variant="contained" size='large' onClick={writeDailyDataOut} disabled> 퇴근 </Button>
