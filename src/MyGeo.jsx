@@ -1,13 +1,16 @@
-import { Container } from '@mui/material'
+import { Card, CardContent, Container, Divider, Paper, Typography } from '@mui/material'
 import React, { useState, useEffect } from 'react'
+
+
+// 내위치 37.40091289517126, 126.7214352464646
+// 논현역 37.400658384749654, 126.72240464747604
 
 function MyGeo() {
 
-
   const [coordinates, setCoordinates] = useState({ latitude: null, longitude: null });
   const [dist, setDist] = useState()
-
-  const targetGeo = {latitude: 37.456255, longitude: 126.705206}
+  let distance = 0
+  const companyGeo = {latitude: 37.400658384749654, longitude: 126.72240464747604}
 
   const haversine = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // 지구 반지름 (단위: 킬로미터)
@@ -46,23 +49,35 @@ function MyGeo() {
     };
 
     getLocation();
-    setDist(haversine(targetGeo.latitude, targetGeo.longitude, coordinates.latitude, coordinates.longitude))
   }, []);
 
   
-
-
+  if(coordinates) {
+    distance = (haversine(coordinates.latitude, coordinates.longitude, companyGeo.latitude, companyGeo.longitude))
+  }
 
 
 
 
   return (
     <>
-      <Container>{coordinates.latitude}</Container>
-      <Container>{coordinates.longitude}</Container>
-
-      <Container>{dist}</Container>
-
+    <Card>
+    <CardContent>
+        <Typography variant="body1" color="blue">
+          현재 사용자 위치 정보
+        </Typography>
+        <Divider />
+        <Typography variant="body2" sx={{ mb: 0 }} >
+          <br />
+          회사에서 {Math.round((distance*1000)*100)/100}m 떨어짐.
+        </Typography>
+        <Divider />
+        <Typography variant="body2" sx={{ mb: 0 }} color="text.secondary">
+          <br />
+          위도 : {coordinates.latitude},   경도 : {coordinates.longitude}
+        </Typography>
+      </CardContent>   
+    </Card>
     </>
   )
 }

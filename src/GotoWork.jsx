@@ -24,6 +24,7 @@ import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
 import { Minimize } from '@mui/icons-material';
+import MyGeo from './MyGeo.jsx';
 
 
 // Initialize Firebase ==================================================
@@ -327,7 +328,11 @@ function GotoWork() {
   return (
     <>
     <ResponsiveAppBar />
-    <Container maxWidth='xs' sx={{mt: 5}}>      
+    <Container maxWidth='xs' sx={{mt: 5}}>
+      <MyGeo />
+    </Container>
+
+    <Container maxWidth='xs' sx={{mt: 5}}>  
       {isGotoWorkTime &&  
       <Stack maxWidth='sm' spacing={2} >
         <Button variant="contained" size='large' onClick={writeDailyDataIn} sx={{fontWeight: 600}}> 출근 </Button>
@@ -348,6 +353,7 @@ function GotoWork() {
       </Stack>
       }
     </Container>
+    
 
     <Dialog
       open={isCompUpdateDialogOpen}
