@@ -26,7 +26,7 @@ function MyGeo(props) {
   const [ companyGeo, setCompanyGeo ] = useState({})
 
   let distance = 0
-  let msg = '회사에 안계신가봐요...ㅠㅠ'
+  let msg = '회사에 안계신가봐요...^^'
 
   const haversine = (lat1, lon1, lat2, lon2) => {
     const R = 6371; // 지구 반지름 (단위: 킬로미터)
@@ -112,7 +112,7 @@ function MyGeo(props) {
         <Divider />
         <Typography variant="body2" sx={{ mb: 0 }} color="text.secondary">
           <br />
-          거리 : {distance}
+          회사와의 거리 : {Math.round(distance * 1000) / 1000 } (km)
         </Typography>
       </CardContent>   
     </Card>
