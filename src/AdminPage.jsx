@@ -12,11 +12,9 @@ import { useNavigate } from 'react-router-dom';
 import ResponsiveAppBar from './ResponsiveAppBar'
 import AddOneRow from './AddOneRow';
 import { Button, Card } from '@mui/material';
+import { SignalCellular2BarOutlined } from '@mui/icons-material';
 import DashBoard2 from './DashBoard2';
-
-
-
-
+import * as XLSX  from 'xlsx';
 
 
 
@@ -27,7 +25,6 @@ import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { Timestamp, getFirestore, collection, addDoc, getDocs, getDoc, doc, updateDoc, setDoc, query, where, orderBy} from "firebase/firestore";
-import { SignalCellular2BarOutlined } from '@mui/icons-material';
 
 
 
@@ -140,7 +137,29 @@ function AdminPage() {
 
 
   const exportExcel = () => {
-    console.log(excelData)
+    // console.log(excelData)
+
+    let tempArray = []
+    tempArray[0]=['날짜', '출근인원']
+
+    for(let i = 0; i <= 30; i++) {      
+      let a = [ i + 1]
+      if(excelData[i]) {        
+        for(let j = 0; j < excelData[i].length; j++)
+        a.push(excelData[i][j]['name'])
+      }
+      tempArray[i+1] = a
+    }
+
+    // console.log('------------')
+    // console.log(tempArray)
+    // console.log('------------')
+
+    let wb = XLSX.utils.book_new()
+    let ws = XLSX.utils.aoa_to_sheet(tempArray)
+    XLSX.utils.book_append_sheet(wb, ws, toFindMonth)
+    XLSX.writeFile(wb, `${userCompany}-${toFindMonth[0]}.xlsx`)
+
   }
 
 

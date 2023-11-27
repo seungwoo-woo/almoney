@@ -100,7 +100,7 @@ useEffect(()=>{
     <>
     {goToWorkData ? goToWorkData.map((d, index) => (
 
-      (d ? <Cell dailyData = {d} date = {index+1}  year = {year} month = {month} /> : "")
+      (d ? <Cell key={index} dailyData = {d} date = {index+1}  year = {year} month = {month} /> : "")
 
       // (d ? d.map((i) => {
       //         return (
